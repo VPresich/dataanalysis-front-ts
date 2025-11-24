@@ -1,0 +1,63 @@
+.btn {
+  font-family: var(--font-family);
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  color: var(--primary);
+  fill: transparent;
+  stroke: var(--primary);
+  gap: 8px;
+  transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    stroke 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn.default,
+.btn.yellow,
+.btn.green,
+.btn.blue,
+.btn.red {
+  stroke: var(--primary);
+}
+
+.iconContainer {
+  display: flex;
+  align-items: center;
+}
+
+.txt {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.btn.default:hover {
+  stroke: var(--default);
+  color: var(--default);
+}
+
+.btn.yellow:hover {
+  stroke: var(--yellow);
+  color: var(--yellow);
+}
+
+.btn.green:hover {
+  stroke: var(--green);
+  color: var(--green);
+}
+
+.btn.blue:hover {
+  stroke: var(--blue);
+  color: var(--blue);
+}
+
+.btn.red:hover {
+  stroke: var(--red);
+  color: var(--red);
+}
+
+.btn:hover {
+  stroke: var(--default);
+  color: var(--default);
+}

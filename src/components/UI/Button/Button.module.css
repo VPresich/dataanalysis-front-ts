@@ -1,0 +1,119 @@
+.btn {
+  width: 100%;
+  font-family: var(--font-family);
+  border-radius: 12px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  height: 60px;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.56;
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  outline: none;
+  background-color: var(--default);
+  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.2s ease;
+}
+
+.btn:hover {
+  background-color: var(--default-accent);
+  transform: translateY(-1px);
+}
+
+.btn.yellow {
+  background-color: var(--yellow);
+}
+
+.btn.yellow:hover {
+  background-color: var(--yellow-accent);
+}
+
+.btn.green {
+  background-color: var(--green);
+}
+
+.btn.green:hover {
+  background-color: var(--green-accent);
+}
+
+.btn.blue {
+  background-color: var(--blue);
+}
+
+.btn.blue:hover {
+  background-color: var(--blue-accent);
+}
+
+.btn.red {
+  background-color: var(--red);
+}
+
+.btn.red:hover {
+  background-color: var(--red-accent);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:disabled:hover {
+  opacity: 0.3;
+}
+
+.btn.cancel {
+  background-color: transparent;
+  color: var(--default-accent);
+  border: 1px solid var(--default-accent);
+  transition: all 0.3s ease;
+}
+
+.btn.cancel:hover {
+  background-color: var(--default-accent);
+  color: var(--white);
+  transform: translateY(-1px);
+}
+
+.btn.cancel.green {
+  border-color: var(--green-accent);
+  color: var(--green-accent);
+}
+
+.btn.cancel.green:hover {
+  background-color: var(--green-accent);
+  color: var(--white);
+}
+
+.btn.cancel.red {
+  border-color: var(--red-accent);
+  color: var(--red-accent);
+}
+
+.btn.cancel.red:hover {
+  background-color: var(--red-accent);
+  color: var(--white);
+}
+
+.btn.cancel.blue {
+  border-color: var(--blue-accent);
+  color: var(--blue-accent);
+}
+
+.btn.cancel.blue:hover {
+  background-color: var(--blue)-accent;
+  color: var(--white);
+}
+
+.btn.cancel.yellow {
+  border-color: var(--yellow-accent);
+  color: var(--yellow)-accent;
+}
+
+.btn.cancel.yellow:hover {
+  background-color: var(--yellow-accent);
+  color: var(--white);
+}

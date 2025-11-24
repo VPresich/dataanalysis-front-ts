@@ -1,0 +1,90 @@
+.header {
+  position: relative;
+  display: inline-block;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--default);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  padding: 0;
+  border-radius: 50%;
+  height: 32px;
+  width: 32px;
+  transition: transform 0.5s ease;
+}
+
+.btn.yellow {
+  background-color: var(--yellow);
+}
+
+.btn.green {
+  background-color: var(--green);
+}
+
+.btn.blue {
+  background-color: var(--blue);
+}
+
+.btn.red {
+  background-color: var(--red);
+}
+
+.btn.open .icon {
+  transform: rotate(180deg);
+  transition: transform 0.5s ease;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-radius: 12px;
+  background-color: transparent;
+}
+
+.label {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: var(--default);
+}
+
+.label.yellow {
+  background-color: var(--yellow);
+}
+
+.label.green {
+  background-color: var(--green);
+}
+
+.label.blue {
+  background-color: var(--blue);
+}
+
+.label.red {
+  background-color: var(--red);
+}
+
+.label input {
+  display: none;
+}
+
+.icon {
+  width: 26px;
+  height: 26px;
+  stroke: var(--white);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}

@@ -1,0 +1,30 @@
+.avatarContainer {
+  position: relative;
+  width: auto;
+  height: 50px;
+}
+
+.avatarBtn {
+  width: auto;
+  height: 50px;
+  border-radius: 30px;
+  padding: 2px 8px;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 129%;
+  letter-spacing: -0.01em;
+  color: var(--color-white);
+  background: var(--color-darkblue);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.avatarBtn:hover {
+  transform: translateY(-1px);
+}

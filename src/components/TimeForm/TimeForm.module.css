@@ -1,0 +1,18 @@
+.form {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.inputs {
+  width: calc(100% - 120px);
+  display: flex;
+  gap: 4px;
+}
+
+.btnAuxStyles {
+  width: 110px;
+  height: 50px;
+  font-size: 16px;
+}

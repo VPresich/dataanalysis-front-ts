@@ -1,0 +1,66 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: var(--default-accent);
+  z-index: 10;
+}
+
+.container.green {
+  background-color: var(--green-accent);
+}
+
+.container.red {
+  background-color: var(--red-accent);
+}
+
+.container.blue {
+  background-color: var(--blue-accent);
+}
+
+.container.yellow {
+  background-color: var(--yellow-accent);
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.text {
+  max-width: 600px;
+  font-weight: 400;
+  width: 90%;
+  font-size: 18px;
+  line-height: 1.37;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: var(--white);
+}
+
+.accent {
+  font-weight: 600;
+  font-style: italic;
+}
+
+@media screen and (max-width: 768px) {
+  .text {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .text {
+    width: 100%;
+    font-size: 16px;
+  }
+}

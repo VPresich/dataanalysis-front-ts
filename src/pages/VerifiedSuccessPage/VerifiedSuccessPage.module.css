@@ -1,0 +1,48 @@
+/* Main container for the page layout */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  text-align: center;
+  background-color: var(--white);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--success);
+  margin-bottom: 20px;
+}
+
+.text {
+  margin-bottom: 28px;
+  color: var(--default);
+  font-size: 1.1rem;
+}
+
+.link {
+  height: 60px;
+  padding: 0 32px;
+  font-family: var(--font-family);
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.56;
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  outline: none;
+  background-color: var(--green);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.link:hover {
+  background-color: var(--green-accent);
+}

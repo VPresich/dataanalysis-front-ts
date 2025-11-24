@@ -1,0 +1,68 @@
+.container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wrapper {
+  display: flex;
+  gap: 8px;
+}
+
+.icon {
+  stroke: var(--white);
+}
+
+.btnDropDown {
+  background-color: var(--default);
+  color: var(--white);
+  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btnDropDown.default {
+  background-color: var(--default);
+}
+
+.btnDropDown.green {
+  background-color: var(--green);
+}
+
+.btnDropDown.red {
+  border: 1px solid var(--red);
+}
+
+.btnDropDown.blue {
+  background-color: var(--blue);
+}
+
+.btnDropDown.yellow {
+  background-color: var(--yellow);
+}
+
+.dropdownMultyTrackNum {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.btnDropDown:hover {
+  background-color: var(--default-accent);
+  transform: translateY(-1px);
+}
+
+.btnDropDown.yellow:hover {
+  background-color: var(--yellow-accent);
+}
+
+.btnDropDown.green:hover {
+  background-color: var(--green-accent);
+}
+
+.btnDropDown.blue:hover {
+  background-color: var(--blue-accent);
+}
+
+.btnDropDown.red:hover {
+  background-color: var(--red-accent);
+}

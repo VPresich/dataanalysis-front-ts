@@ -1,0 +1,66 @@
+.sidebarBtn {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.sidebarBtn.default {
+  background-color: var(--default);
+}
+
+.sidebarBtn.yellow {
+  background-color: var(--yellow);
+}
+
+.sidebarBtn.green {
+  background-color: var(--green);
+}
+
+.sidebarBtn.blue {
+  background-color: var(--blue);
+}
+
+.sidebarBtn.red {
+  background-color: var(--red);
+}
+
+.sidebarBtn.default:hover {
+  background-color: var(--default-accent);
+  transform: translateY(-1px);
+}
+
+.sidebarBtn.yellow:hover {
+  background-color: var(--yellow-accent);
+  transform: translateY(-1px);
+}
+
+.sidebarBtn.green:hover {
+  background-color: var(--green-accent);
+  transform: translateY(-1px);
+}
+
+.sidebarBtn.blue:hover {
+  background-color: var(--blue-accent);
+  transform: translateY(-1px);
+}
+
+.sidebarBtn.red:hover {
+  background-color: var(--red-accent);
+  transform: translateY(-1px);
+}
+
+.sidebarBtn:disabled {
+  background-color: #cccccc;
+  color: #7a7979;
+  cursor: not-allowed;
+  opacity: 0.6;
+}

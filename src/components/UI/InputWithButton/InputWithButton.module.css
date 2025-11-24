@@ -1,0 +1,89 @@
+.wrapper {
+  position: relative;
+}
+
+.inputContainer {
+  position: relative;
+  display: flex;
+}
+
+.input {
+  width: 100%;
+  font-family: var(--font-family);
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 14px 30px 14px 14px;
+  outline: none;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.37;
+  letter-spacing: -0.03em;
+  color: var(--primary);
+  background-color: transparent;
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.5s;
+}
+
+.input:hover {
+  border-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.01);
+}
+
+.input:focus {
+  outline: none;
+  border-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.04);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.error {
+  position: absolute;
+  bottom: -12px;
+  left: 0;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.17;
+  letter-spacing: -0.03em;
+  color: var(--error);
+}
+
+.input.error {
+  border-color: var(--error);
+}
+
+.searchButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: transparent;
+  border: none;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-25%, 25%);
+  z-index: 200;
+}
+
+.icon {
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  fill: transparent;
+  stroke: var(--default);
+  transition: stroke 300ms ease-in-out;
+}
+
+.icon:hover {
+  fill: transparent;
+  stroke: var(--green);
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px transparent inset;
+  box-shadow: 0 0 0 1000px transparent inset;
+  -webkit-text-fill-color: var(--primary);
+  transition: background-color 3000s ease-in-out;
+}

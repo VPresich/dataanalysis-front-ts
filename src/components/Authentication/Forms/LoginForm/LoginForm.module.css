@@ -1,0 +1,65 @@
+.form {
+  width: 100%;
+}
+
+.content {
+  display: flex;
+  font-family: var(--font-family);
+  flex-direction: column;
+  row-gap: 40px;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.title {
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 120%;
+  letter-spacing: -0.02em;
+  color: var(--primary);
+}
+
+.text {
+  font-family: inherit;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 137%;
+  color: rgba(18, 20, 23, 0.8);
+}
+
+.inputsWrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 18px;
+}
+
+.forgotWrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
+  margin-bottom: 12px;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btnsContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media screen and (max-width: 768px) {
+  .title {
+    font-size: 36px;
+  }
+}

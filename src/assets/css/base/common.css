@@ -1,0 +1,53 @@
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  font-weight: 400;
+  background-color: var(--section-bgr);
+  color: var(--primary);
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* WebKit browsers (Chrome, Edge Chromium, Safari) */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--default);
+  border-radius: 7px;
+  height: 120px;
+  min-height: 30px;
+  transition: background 0.2s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+*::-webkit-scrollbar-thumb::before {
+  content: "";
+  display: block;
+  height: 100%;
+  min-height: 30px;
+  max-height: 120px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--default) #f0f0f0;
+}
+
+html {
+  scroll-behavior: smooth;
+}

@@ -1,0 +1,41 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.triangle {
+  --triangle-color: var(--default);
+}
+
+.triangle.default {
+  --triangle-color: var(--default);
+}
+
+.triangle.green {
+  --triangle-color: var(--green);
+}
+
+.triangle.yellow {
+  --triangle-color: var(--yellow);
+}
+
+.triangle.blue {
+  --triangle-color: var(--blue);
+}
+
+.triangle.red {
+  --triangle-color: var(--red);
+} */

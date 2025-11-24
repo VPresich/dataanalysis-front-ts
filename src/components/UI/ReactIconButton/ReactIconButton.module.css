@@ -1,0 +1,82 @@
+.btn {
+  border-radius: 12px;
+  padding: 12px;
+  border: 1px solid transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  color: var(--primary);
+  gap: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: color 0.5s ease, border-color 0.5s ease;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.5s ease;
+}
+
+.iconContainer {
+  display: flex;
+  align-items: center;
+}
+
+.txt {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.25;
+  background-color: transparent;
+}
+
+.btn.default {
+  color: var(--default);
+}
+
+.btn.yellow {
+  color: var(--yellow);
+}
+
+.btn.green {
+  color: var(--green);
+}
+
+.btn.blue {
+  color: var(--blue);
+}
+
+.btn.red {
+  color: var(--red);
+}
+
+.btn.default:hover {
+  color: var(--default-accent);
+  border-color: var(--default-accent);
+}
+
+.btn.yellow:hover {
+  color: var(--yellow-accent);
+  border-color: var(--yellow-accent);
+}
+
+.btn.green:hover {
+  color: var(--green-accent);
+  border-color: var(--green-accent);
+}
+
+.btn.blue:hover {
+  background-color: var(--blue-accent);
+  border-color: var(--blue-accent);
+}
+
+.btn.red:hover {
+  background-color: var(--red-accent);
+  border-color: var(--red-accent);
+}
+
+.btn:hover .icon {
+  transform: scale(1.1);
+}
