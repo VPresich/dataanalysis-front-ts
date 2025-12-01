@@ -1,17 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
-import authReducer from "../redux/auth/slice";
-import sourcesReducer from "../redux/datasources/slice";
-import analysisReducer from "../redux/data/slice";
-import dataFiltersReducer from "../redux/datafilters/slice";
-import houghReducer from "../redux/houghdata/slice";
-import houghTrajectoryReducer from "../redux/houghTrajectory/slice";
-import sideBarReducer from "../redux/sidebar/slice";
-import loaderReducer from "../redux/loader/slice";
+import authReducer from "./auth/slice";
+import sourcesReducer from "./datasources/slice";
+import analysisReducer from "./data/slice";
+import dataFiltersReducer from "./datafilters/slice";
+import houghReducer from "./houghdata/slice";
+import houghTrajectoryReducer from "./houghTrajectory/slice";
+import sideBarReducer from "./sidebar/slice";
+import loaderReducer from "./loader/slice";
+import { AuthState } from "../redux/auth/types";
 
 import {
   persistStore,
   persistReducer,
+  PersistConfig,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -20,15 +22,20 @@ import {
   REGISTER,
 } from "redux-persist";
 
-const authPersistConfig = {
+const authPersistConfig: PersistConfig<AuthState> = {
   key: "authAnalysis",
   storage,
   whitelist: ["token"],
 };
 
+const persistedAuthReducer = persistReducer<AuthState>(
+  authPersistConfig,
+  authReducer
+);
+
 const store = configureStore({
   reducer: {
-    auth: persistReducer(authPersistConfig, authReducer),
+    auth: persistedAuthReducer,
     sources: sourcesReducer,
     analysis: analysisReducer,
     datafilters: dataFiltersReducer,
@@ -46,6 +53,8 @@ const store = configureStore({
     }),
 });
 
-const persistor = persistStore(store);
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
+const persistor = persistStore(store);
 export { store, persistor };

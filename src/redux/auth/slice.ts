@@ -11,15 +11,7 @@ import {
   requestResetPwd,
   resetPassword,
 } from "./operations";
-import { User, AuthResponse, UserUpdateTheme } from "./types";
-
-interface AuthState {
-  user: User;
-  token: string | null;
-  isLoggedIn: boolean;
-  isRefreshing: boolean;
-  error: string | null;
-}
+import { User, AuthResponse, UserUpdateTheme, AuthState } from "./types";
 
 const initialState: AuthState = {
   user: {

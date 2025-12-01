@@ -46,3 +46,11 @@ export interface ResetPasswordPayload {
   password: string;
   token: string;
 }
+
+export interface AuthState {
+  user: User;
+  token: string | null;
+  isLoggedIn: boolean;
+  isRefreshing: boolean;
+  error: string | null;
+}
