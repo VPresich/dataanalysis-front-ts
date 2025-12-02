@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "../../api/api";
+import { RootState } from "../store";
 import { setAuthHeader, clearAuthHeader } from "../../api/axiosInst";
 import {
   User,
@@ -66,7 +67,7 @@ export const logOut = createAsyncThunk<void, void, { rejectValue: string }>(
 export const refreshUser = createAsyncThunk<
   User,
   void,
-  { rejectValue: string; state: any }
+  { rejectValue: string; state: RootState }
 >(
   "users/refresh",
   async (_, thunkAPI) => {
