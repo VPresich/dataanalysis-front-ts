@@ -1,15 +1,18 @@
 import { createSelector } from "reselect";
+import { RootState } from "../store";
+import { DataRecord } from "./types";
+
 import { selectTrackNum } from "../datafilters/selectors";
 import { selectSelectedTrackNums } from "../datafilters/selectors";
 
 import { selectImmConsistent } from "../datafilters/selectors";
 import { selectImmConsistentMaxValue } from "../datafilters/selectors";
 
-export const selectDataForAnalysis = (state) => state.analysis.items;
-export const selectDataForAnalysisLength = (state) =>
+export const selectDataForAnalysis = (state: RootState) => state.analysis.items;
+export const selectDataForAnalysisLength = (state: RootState) =>
   state.analysis.items.length || 0;
-export const selectIsLoading = (state) => state.analysis.isLoading;
-export const selectError = (state) => state.analysis.error;
+export const selectIsLoading = (state: RootState) => state.analysis.isLoading;
+export const selectError = (state: RootState) => state.analysis.error;
 
 export const selectDataForTrack = createSelector(
   [selectDataForAnalysis, selectTrackNum],
@@ -17,7 +20,7 @@ export const selectDataForTrack = createSelector(
     if (!trackNum || trackNum === "All") {
       return data;
     }
-    return data.filter((row) => row.TrackNum === Number(trackNum));
+    return data.filter((row: DataRecord) => row.TrackNum === Number(trackNum));
   }
 );
 
@@ -25,7 +28,7 @@ export const selectDataForTracks = createSelector(
   [selectDataForAnalysis, selectSelectedTrackNums],
   (data, trackNums) => {
     const trackNumsAsNumbers = trackNums.map(Number);
-    return data.filter((row) =>
+    return data.filter((row: DataRecord) =>
       trackNumsAsNumbers.includes(Number(row.TrackNum))
     );
   }
@@ -39,7 +42,8 @@ export const selectDataForImmConsistent = createSelector(
       return data;
     }
     return data.filter(
-      (row) => row.IMMconsistent.toString().toLowerCase() === normalizedValue
+      (row: DataRecord) =>
+        row.IMMconsistent.toString().toLowerCase() === normalizedValue
     );
   }
 );
@@ -51,6 +55,9 @@ export const selectFilteredData = createSelector(
     if (!normalizedValue) {
       return data;
     }
-    return data.filter((row) => row.IMMconsistentValue >= normalizedValue);
+    return data.filter((row: DataRecord) => {
+      const numericValue = Number(row.IMMconsistentValue);
+      return !isNaN(numericValue) && numericValue >= normalizedValue;
+    });
   }
 );

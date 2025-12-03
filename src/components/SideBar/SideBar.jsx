@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
-import ExperimentCardsList from "../ExperimentCardsList/ExperimentCardsList.jsx";
-import { selectSidebarOpen } from "../../redux/sidebar/selectors.js";
-import AddExperiment from "../AddExperiment/AddExperiment.jsx";
-import Separator from "../UI/Separator/Separator.jsx";
-import DeletAllExperiments from "../DeleteAllExperiments/DeleteAllExperiments.jsx";
+import ExperimentCardsList from "../ExperimentCardsList/ExperimentCardsList";
+import { selectSidebarOpen } from "../../redux/sidebar/selectors";
+import AddExperiment from "../AddExperiment/AddExperiment";
+import Separator from "../UI/Separator/Separator";
+import DeletAllExperiments from "../DeleteAllExperiments/DeleteAllExperiments";
 import { selectTheme } from "../../redux/auth/selectors";
-import { selectSources } from "../../redux/datasources/selectors.js";
+import { selectSources } from "../../redux/datasources/selectors";
 
 import clsx from "clsx";
 import { useRef } from "react";

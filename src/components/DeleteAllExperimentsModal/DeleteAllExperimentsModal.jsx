@@ -1,7 +1,7 @@
 // import { useDispatch } from "react-redux";
 
-import ModalWrapper from "../UI/ModalWrapper/ModalWrapper.jsx";
-import DeleteApproveForm from "../DeleteApproveForm/DeleteApproveForm.jsx";
+import ModalWrapper from "../UI/ModalWrapper/ModalWrapper";
+import DeleteApproveForm from "../DeleteApproveForm/DeleteApproveForm";
 // import {
 //   errNotify,
 //   successNotify,

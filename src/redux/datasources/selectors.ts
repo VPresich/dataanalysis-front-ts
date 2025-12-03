@@ -1,19 +1,21 @@
 import { createSelector } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
-export const selectSources = (state) => state.sources.items;
-export const selectIsLoading = (state) => state.sources.selectIsLoading;
-export const selectUploadProgress = (state) => state.sources.uploadProgress;
+export const selectSources = (state: RootState) => state.sources.items;
+export const selectIsLoading = (state: RootState) => state.sources.isLoading;
+export const selectUploadProgress = (state: RootState) =>
+  state.sources.uploadProgress;
 
 export const selectSourceNumbers = createSelector([selectSources], (sources) =>
   sources.map((source) => source.source_number)
 );
 
-export const selectSourceByNumber = (sourceNumber) =>
+export const selectSourceByNumber = (sourceNumber: number) =>
   createSelector([selectSources], (sources) =>
     sources.find((source) => source.source_number === sourceNumber)
   );
 
-export const selectNextSourceNumber = (currentNumber) =>
+export const selectNextSourceNumber = (currentNumber: number) =>
   createSelector([selectSources], (sources) => {
     if (!sources || sources.length === 0) {
       return null;
