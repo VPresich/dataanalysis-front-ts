@@ -1,4 +1,4 @@
-const generateImmConsistentValues = () => {
+const generateImmConsistentValues = (): string[] => {
   return ["All", "None", "0", "1"];
 };
 
