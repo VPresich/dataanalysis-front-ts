@@ -15,3 +15,23 @@
   line-height: 20px;
   transition: width 0.3s;
 }
+
+.progressBar.green {
+  background-color: var(--green);
+}
+
+.progressBar.blue {
+  background-color: var(--blue);
+}
+
+.progressBar.red {
+  background-color: var(--red);
+}
+
+.progressBar.yellow {
+  background-color: var(--yellow);
+}
+
+.progressBar.default {
+  background-color: var(--default);
+}

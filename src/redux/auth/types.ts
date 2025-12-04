@@ -1,7 +1,9 @@
+export type Theme = "default" | "green" | "yellow" | "blue" | "red";
+
 export interface User {
   name: string;
   email: string;
-  theme: string;
+  theme: Theme;
   avatarURL: string;
 }
 
@@ -21,7 +23,7 @@ export interface AuthResponse {
 }
 
 export interface UserUpdateTheme {
-  theme: string;
+  theme: Theme;
 }
 
 export interface UserUpdateInfo extends Partial<Pick<User, "name" | "theme">> {

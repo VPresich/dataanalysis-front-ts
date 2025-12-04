@@ -1,12 +1,26 @@
-import { useFormContext, Controller } from "react-hook-form";
+import React from "react";
+import {
+  useFormContext,
+  Controller,
+  FieldValues,
+  FieldError,
+} from "react-hook-form";
 import iconsPath from "../../../assets/img/icons.svg";
 import css from "./InputWithButton.module.css";
+import { InputWithButtonProps } from "./InputWithButton.types";
 
-const InputWithButton = ({ name, placeholder, type, onSubmit }) => {
+const InputWithButton: React.FC<InputWithButtonProps> = ({
+  name,
+  placeholder,
+  type = "text",
+  onSubmit,
+}) => {
   const {
     control,
     formState: { errors },
-  } = useFormContext();
+  } = useFormContext<FieldValues>();
+
+  const error = errors[name] as FieldError | undefined;
 
   return (
     <div className={css.wrapper}>
@@ -27,15 +41,13 @@ const InputWithButton = ({ name, placeholder, type, onSubmit }) => {
               className={css.searchButton}
             >
               <svg className={css.icon}>
-                <use href={`${iconsPath}#icon-search`}></use>
+                <use href={`${iconsPath}#icon-search`} />
               </svg>
             </button>
           </div>
         )}
       />
-      {errors[name] && (
-        <span className={css.error}>{errors[name].message}</span>
-      )}
+      {error && <span className={css.error}>{error.message}</span>}
     </div>
   );
 };

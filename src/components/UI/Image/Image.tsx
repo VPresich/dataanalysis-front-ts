@@ -1,10 +1,13 @@
+import React from "react";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../../redux/auth/selectors";
 import clsx from "clsx";
 import css from "./Image.module.css";
+import { ImageProps } from "./Image.types";
 
-const Image = ({ imgUrl, name }) => {
+const Image: React.FC<ImageProps> = ({ imgUrl, name }) => {
   const theme = useSelector(selectTheme);
+
   return (
     <div className={clsx(css.container, css[theme])}>
       <img className={css.img} src={imgUrl} alt={name} />
@@ -12,4 +15,5 @@ const Image = ({ imgUrl, name }) => {
     </div>
   );
 };
+
 export default Image;

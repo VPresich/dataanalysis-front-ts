@@ -11,7 +11,7 @@ import {
   requestResetPwd,
   resetPassword,
 } from "./operations";
-import { User, AuthResponse, UserUpdateTheme, AuthState } from "./types";
+import { User, AuthResponse, UserUpdateTheme, AuthState, Theme } from "./types";
 
 const initialState: AuthState = {
   user: {
@@ -22,7 +22,7 @@ const initialState: AuthState = {
   },
   token: null,
   isLoggedIn: false,
-  isRefreshing: true,
+  isRefreshing: false,
   error: null,
 };
 
@@ -30,7 +30,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setTheme(state, action: PayloadAction<string>) {
+    setTheme(state, action: PayloadAction<Theme>) {
       state.user.theme = action.payload;
     },
     resetRefreshState(state, action: PayloadAction<boolean>) {

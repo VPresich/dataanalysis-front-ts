@@ -1,9 +1,11 @@
 import { useForm, FormProvider } from "react-hook-form";
 import Button from "../UI/Button/Button";
 import css from "./UnauthorizedForm.module.css";
+import { UnauthorizedFormProps } from "./UnauthorizedForm.types";
 
-const UnauthorizedForm = ({ onSubmit }) => {
+const UnauthorizedForm: React.FC<UnauthorizedFormProps> = ({ onSubmit }) => {
   const methods = useForm();
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={onSubmit} className={css.form}>

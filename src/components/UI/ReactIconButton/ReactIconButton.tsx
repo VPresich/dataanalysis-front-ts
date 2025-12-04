@@ -1,12 +1,15 @@
+import React from "react";
 import clsx from "clsx";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../../redux/auth/selectors";
 import css from "./ReactIconButton.module.css";
+import { ReactIconButtonProps } from "./ReactIconButton.types";
 
-/**
- * Universal button component with react icon.
- */
-export default function ReactIconButton({ icon: Icon, onClick, children }) {
+const ReactIconButton: React.FC<ReactIconButtonProps> = ({
+  icon: Icon,
+  onClick,
+  children,
+}) => {
   const theme = useSelector(selectTheme);
 
   return (
@@ -16,11 +19,11 @@ export default function ReactIconButton({ icon: Icon, onClick, children }) {
       onClick={onClick}
     >
       <span className={css.iconContainer}>
-        <span className={css.iconContainer}>
-          {Icon && <Icon className={clsx(css.icon, css[theme])} />}
-        </span>
+        {Icon && <Icon className={clsx(css.icon, css[theme])} />}
       </span>
       <span className={css.txt}>{children}</span>
     </button>
   );
-}
+};
+
+export default ReactIconButton;

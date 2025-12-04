@@ -1,22 +1,25 @@
 import { useRef, useEffect, useCallback } from "react";
-import ReactDOM from "react-dom";
+import { createPortal } from "react-dom";
 import clsx from "clsx";
 
-import css from "./ModalWrapper.module.css";
 import iconsPath from "../../../assets/img/icons.svg";
+import css from "./ModalWrapper.module.css";
+import { ModalWrapperProps } from "./ModalWrapper.types";
 
 const ModalWrapper = ({
   children,
   onClose,
   portalId = "portal-root",
   isGraph = false,
-}) => {
-  const wrapperRef = useRef(null);
+}: ModalWrapperProps) => {
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
 
   const handleClickOutside = useCallback(
-    (event) => {
+    (event: React.MouseEvent) => {
       event.stopPropagation();
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+      const target = event.target as Node;
+
+      if (wrapperRef.current && !wrapperRef.current.contains(target)) {
         onClose();
       }
     },
@@ -24,7 +27,7 @@ const ModalWrapper = ({
   );
 
   const handleDocumentKeyDown = useCallback(
-    (event) => {
+    (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         onClose();
       }
@@ -39,14 +42,15 @@ const ModalWrapper = ({
     };
   }, [handleDocumentKeyDown]);
 
-  return ReactDOM.createPortal(
+  const portalRoot = document.getElementById(portalId);
+  if (!portalRoot) return null;
+
+  return createPortal(
     <div className={css.modalWrapper} onClick={handleClickOutside}>
       <div
-        className={clsx(css.modal, isGraph && css.graph)}
         ref={wrapperRef}
-        onClick={(event) => {
-          event.stopPropagation();
-        }}
+        className={clsx(css.modal, isGraph && css.graph)}
+        onClick={(event) => event.stopPropagation()}
       >
         <button className={css.closeBtn} onClick={onClose}>
           <svg
@@ -56,10 +60,11 @@ const ModalWrapper = ({
             <use href={`${iconsPath}#icon-x-close`} />
           </svg>
         </button>
+
         {children}
       </div>
     </div>,
-    document.getElementById(portalId)
+    portalRoot
   );
 };
 
