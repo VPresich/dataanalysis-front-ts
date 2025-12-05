@@ -6,7 +6,7 @@
   display: flex;
   font-family: var(--font-family);
   flex-direction: column;
-  gap: 40px;
+  gap: 28px;
 }
 
 .titleContainer {

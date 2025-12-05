@@ -11,6 +11,7 @@ import { feedbackSchema } from "./feedbackSchema";
 import { getChangedFields } from "../../../../auxiliary/getChangedFields";
 import { selectUser } from "../../../../redux/auth/selectors";
 import iconsPath from "../../../../assets/img/icons.svg";
+import RadioGroup from "../../../UI/RadioGroup/RadioGroup";
 import css from "./UserSettingsForm.module.css";
 
 const UserSettingsForm = ({ handleUserSave }) => {
@@ -24,6 +25,7 @@ const UserSettingsForm = ({ handleUserSave }) => {
       email: email || "",
       avatar: null,
       password: "",
+      theme: theme,
     },
     shouldUnregister: true,
   });
@@ -107,6 +109,16 @@ const UserSettingsForm = ({ handleUserSave }) => {
               control={methods.control}
               render={({ field }) => (
                 <Input {...field} placeholder="Password" type="password" />
+              )}
+            />
+            <Controller
+              name="theme"
+              control={control}
+              render={({ field }) => (
+                <RadioGroup
+                  name={field.name}
+                  options={["default", "green", "blue", "yellow", "red"]}
+                />
               )}
             />
           </div>

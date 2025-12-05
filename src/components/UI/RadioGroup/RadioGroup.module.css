@@ -1,17 +1,36 @@
-.radioGroup {
+.wrapper {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 12px 18px;
   display: flex;
-  flex-direction: column;
-  row-gap: 16px;
+  gap: 12px;
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
 }
 
-.radioLabel {
+.wrapper:hover {
+  border-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.labelTitle {
   font-family: var(--font-family);
   font-weight: 400;
   font-size: 16px;
   line-height: 1.37;
   color: var(--primary);
+  opacity: 0.8;
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: row;
+  column-gap: 16px;
+}
+
+.radioLabel {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .radioInput {
@@ -26,23 +45,34 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 10px;
   background-color: transparent;
 }
 
-.radioInput:checked + .customRadio {
+.customRadio.default {
   border-color: var(--default);
 }
 
-.radioInput:checked + .customRadio::after {
-  content: "";
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
+.radioInput.default:checked + .customRadio::after {
   background-color: var(--default);
 }
 
-.radioInput.yellow:checked + .customRadio {
+.customRadio.green {
+  border-color: var(--green);
+}
+
+.radioInput.green:checked + .customRadio::after {
+  background-color: var(--green);
+}
+
+.customRadio.blue {
+  border-color: var(--blue);
+}
+
+.radioInput.blue:checked + .customRadio::after {
+  background-color: var(--blue);
+}
+
+.customRadio.yellow {
   border-color: var(--yellow);
 }
 
@@ -50,23 +80,17 @@
   background-color: var(--yellow);
 }
 
-.radioInput.green:checked + .customRadio {
-  border-color: var(--green);
-}
-.radioInput.green:checked + .customRadio::after {
-  background-color: var(--green);
-}
-
-.radioInput.blue:checked + .customRadio {
-  border-color: var(--blue);
-}
-.radioInput.blue:checked + .customRadio::after {
-  background-color: var(--blue);
-}
-
-.radioInput.red:checked + .customRadio {
+.customRadio.red {
   border-color: var(--red);
 }
+
 .radioInput.red:checked + .customRadio::after {
   background-color: var(--red);
+}
+
+.radioInput:checked + .customRadio::after {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
 }
