@@ -1,17 +1,18 @@
-import { useEffect } from "react";
-import { useForm, FormProvider } from "react-hook-form";
+import React, { useEffect } from "react";
+import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import clsx from "clsx";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { feedbackSchema } from "./feedbackScema";
 import InputWithButton from "../InputWithButton/InputWithButton";
+import { SearchFormProps, SearchFormValues } from "./SearchForm.types";
 
-const SearchForm = ({
+const SearchForm: React.FC<SearchFormProps> = ({
   onSearch,
   initValue = "",
   className = null,
   placeholder = "Search",
 }) => {
-  const methods = useForm({
+  const methods = useForm<SearchFormValues>({
     resolver: yupResolver(feedbackSchema),
     defaultValues: {
       topic: initValue,
@@ -24,7 +25,7 @@ const SearchForm = ({
     setValue("topic", initValue);
   }, [initValue, setValue]);
 
-  const onSubmit = (data) => {
+  const onSubmit: SubmitHandler<SearchFormValues> = (data) => {
     const value = data.topic.trim();
     onSearch(value);
   };
@@ -45,4 +46,5 @@ const SearchForm = ({
     </FormProvider>
   );
 };
+
 export default SearchForm;

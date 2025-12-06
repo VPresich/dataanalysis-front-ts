@@ -3,8 +3,9 @@ import iconsPath from "../../../assets/img/icons.svg";
 import Button from "../Button/Button";
 import clsx from "clsx";
 import css from "./MultySelector.module.css";
+import { MultySelectorProps } from "./MultySelector.types";
 
-const MultySelector = ({
+const MultySelector: React.FC<MultySelectorProps> = ({
   btnLabel,
   options,
   selectedOptions = [],
@@ -14,11 +15,11 @@ const MultySelector = ({
   btnCSSClass,
   iconCSSClass,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const handleCheckboxChange = (event) => {
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    let updatedOptions;
+    let updatedOptions: string[];
 
     if (selectedOptions.includes(value)) {
       updatedOptions = selectedOptions.filter((option) => option !== value);
@@ -39,33 +40,27 @@ const MultySelector = ({
   return (
     <div className={css.container}>
       <button
-        className={clsx(
-          css.btn,
-          { [css.open]: isOpen },
-          btnCSSClass && btnCSSClass
-        )}
+        className={clsx(css.btn, { [css.open]: isOpen }, btnCSSClass)}
         onClick={() => setIsOpen(!isOpen)}
+        type="button"
       >
         <span className={clsx(css.text, btnCSSClass)}>
           {selectedOptions.length > 0
             ? `${selectedOptions.length} selected`
             : btnLabel}
         </span>
+
         <div className={clsx(css.iconContainer)}>
           <svg className={clsx(css.icon, iconCSSClass)} aria-label="arrow icon">
             <use href={`${iconsPath}#icon-dropdown`} />
           </svg>
         </div>
       </button>
+
       {isOpen && (
-        <div
-          className={clsx(
-            css.dropdownWrapper,
-            dropdownCSSClass && dropdownCSSClass
-          )}
-        >
-          <div className={clsx(css.dropdown)}>
-            <div className={clsx(css.checkboxWrapper)}>
+        <div className={clsx(css.dropdownWrapper, dropdownCSSClass)}>
+          <div className={css.dropdown}>
+            <div className={css.checkboxWrapper}>
               <Button
                 onClick={handleSelectAllToggle}
                 btnAuxStyles={css.btnAuxStyles}
@@ -75,13 +70,14 @@ const MultySelector = ({
                   : "Select all"}
               </Button>
             </div>
-            {options.map((option, index) => (
-              <div key={index} className={clsx(css.checkboxWrapper)}>
+
+            {options.map((option) => (
+              <div key={option} className={css.checkboxWrapper}>
                 <label
                   className={clsx(
                     css.option,
                     { [css.selected]: selectedOptions.includes(option) },
-                    optionCSSClass && optionCSSClass
+                    optionCSSClass
                   )}
                 >
                   <input
