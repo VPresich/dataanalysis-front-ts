@@ -6,6 +6,7 @@ import {
   uploadData,
   deleteSourceByNumber,
   updateSourceByNumber,
+  deleteAllSources,
 } from "./operations";
 import {
   DataSourcesState,
@@ -136,6 +137,22 @@ const sourcesSlice = createSlice({
         }
       )
       .addCase(updateSourceByNumber.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string | null;
+      })
+      .addCase(deleteAllSources.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(
+        deleteAllSources.fulfilled,
+        (state, action: PayloadAction<DataSourceOperationResponse>) => {
+          state.isLoading = false;
+          state.items = [];
+          state.error = null;
+        }
+      )
+      .addCase(deleteAllSources.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string | null;
       })

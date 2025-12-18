@@ -110,6 +110,23 @@ export const updateSourceByNumber = createAsyncThunk<
   }
 );
 
+export const deleteAllSources = createAsyncThunk<
+  DataSourceOperationResponse,
+  void,
+  { rejectValue: string }
+>("sources/deleteAllSources", async (_, thunkAPI) => {
+  try {
+    const data = await api.delete<DataSourceOperationResponse>(`/sources/`);
+
+    return data;
+  } catch (error: any) {
+    const message =
+      error.response?.data?.message || error.message || "Unknown error";
+
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 //   {
 //   onUploadProgress: (progressEvent) => {
 //     if (progressEvent.total) {
