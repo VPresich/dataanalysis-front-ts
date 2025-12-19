@@ -6,7 +6,7 @@ import { BaseURL } from "../../../api/axiosInst";
 export default function GoogleBtn() {
   return (
     <React.Fragment>
-      <a href={`${BaseURL}auth/google`} className={css.btn}>
+      <a href={`${BaseURL}/auth/google`} className={css.btn}>
         <span>
           <img src={googleIcon} alt="google icon" className={css.icon} />
         </span>
