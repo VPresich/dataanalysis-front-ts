@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { axiosInst } from "../../api/axiosInst";
 import { api } from "../../api/api";
 import { DataRecord, FilterParams, RequestFilterParams } from "./types";
 
@@ -9,7 +8,7 @@ export const getNonameData = createAsyncThunk<
   { rejectValue: string }
 >("data/getNonameData", async (_, thunkAPI) => {
   try {
-    const data = await api.get<DataRecord[]>(`data/noname/data`);
+    const data = await api.get<DataRecord[]>(`/data/noname/data`);
     return data;
   } catch (error: any) {
     const message =
@@ -25,7 +24,7 @@ export const getNonameDataBySource = createAsyncThunk<
 >("data/getNonameDataBySource", async (sourceNumber, thunkAPI) => {
   try {
     const data = await api.get<DataRecord[]>(
-      `data/noname/data/${Number(sourceNumber)}`
+      `/data/noname/data/${Number(sourceNumber)}`
     );
     return data;
   } catch (error: any) {
@@ -61,7 +60,7 @@ export const getFilteredData = createAsyncThunk<
       const params: FilterParams = {};
       if (startTime) params.startTime = startTime;
       if (endTime) params.endTime = endTime;
-      const data = await api.get<DataRecord[]>(`data/${sourceNumber}/filter`, {
+      const data = await api.get<DataRecord[]>(`/data/${sourceNumber}/filter`, {
         params,
       });
       return data;

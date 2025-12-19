@@ -9,8 +9,11 @@ export interface DataSourceCreate extends DataSource {
   datafile: File;
 }
 
-export interface DataSourceUpdate
-  extends Partial<Pick<DataSource, "source_name" | "file_name" | "comment">> {}
+export interface DataSourceUpdate {
+  source_name?: string;
+  file_name?: string;
+  comment?: string | null;
+}
 
 export interface DataSourceResponse extends DataSource {
   _id: string;

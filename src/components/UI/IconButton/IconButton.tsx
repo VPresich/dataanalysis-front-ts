@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import clsx from "clsx";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../../redux/auth/selectors";

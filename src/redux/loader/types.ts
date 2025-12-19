@@ -1,4 +1,4 @@
 export interface LoaderState {
-  loading: Boolean;
+  loading: boolean;
   error: string | null;
 }

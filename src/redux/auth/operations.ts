@@ -20,7 +20,7 @@ export const register = createAsyncThunk<
   { rejectValue: string }
 >("auth/register", async (credentials, thunkAPI) => {
   try {
-    const data = await api.post<AuthResponse>("auth/register", credentials);
+    const data = await api.post<AuthResponse>("/auth/register", credentials);
     if (data.token) {
       setAuthHeader(data.token);
     }
@@ -38,7 +38,7 @@ export const logIn = createAsyncThunk<
   { rejectValue: string }
 >("auth/login", async (credentials, thunkAPI) => {
   try {
-    const data = await api.post<AuthResponse>("auth/login", credentials);
+    const data = await api.post<AuthResponse>("/auth/login", credentials);
     if (data.token) {
       setAuthHeader(data.token);
     }
@@ -54,7 +54,7 @@ export const logOut = createAsyncThunk<void, void, { rejectValue: string }>(
   "auth/logout",
   async (_, thunkAPI) => {
     try {
-      await api.post<void>("auth/logout");
+      await api.post<void>("/auth/logout");
       clearAuthHeader();
     } catch (error: any) {
       const message =
@@ -81,7 +81,7 @@ export const refreshUser = createAsyncThunk<
     setAuthHeader(savedToken);
 
     try {
-      const user = await api.get<User>("users/current");
+      const user = await api.get<User>("/users/current");
       return user;
     } catch (error: any) {
       const message =
@@ -148,7 +148,7 @@ export const resendVerify = createAsyncThunk<
   { rejectValue: string }
 >("auth/resendVerify", async (payload, thunkAPI) => {
   try {
-    const data = await api.post<ServerMessage>("auth/resend-verify", payload);
+    const data = await api.post<ServerMessage>("/auth/resend-verify", payload);
     return data;
   } catch (error: any) {
     const message =

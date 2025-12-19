@@ -144,14 +144,11 @@ const sourcesSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(
-        deleteAllSources.fulfilled,
-        (state, action: PayloadAction<DataSourceOperationResponse>) => {
-          state.isLoading = false;
-          state.items = [];
-          state.error = null;
-        }
-      )
+      .addCase(deleteAllSources.fulfilled, (state) => {
+        state.isLoading = false;
+        state.items = [];
+        state.error = null;
+      })
       .addCase(deleteAllSources.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string | null;

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { AxiosRequestConfig } from "axios";
 import { axiosInst } from "./axiosInst";
 
