@@ -1,57 +1,82 @@
-# Data Analysis App (Frontend)
+## Frontend Architecture & Backend Integration
+# Overview
 
-Web application for working with user data.
-Allows authorized users to upload files with a defined data structure,
-filter them, and view the data in tables and charts. Demo data is available for non-logged-in users.
+This frontend application is a Single Page Application (SPA) built with React.
+It is designed to work with multiple backend implementations, which can be switched dynamically via environment variables.
 
-## Features
+# The system supports:
 
-- User authentication and registration
-- Login via email/password or Google account
-- Change password and edit user profile
-- Upload and manage data files
-- View and filter uploaded data sources
-- Display data in tables and charts
-- Demo data available for non-logged-in users
+Python backend (FastAPI + PostgreSQL)
+Node.js backend (Express + MongoDB)
 
-## Technologies
+The frontend is fully decoupled from backend implementation details and communicates only via REST API.
 
-- React + JavaScript
-- React Router for routing
-- Axios for API requests
-- Chart.js / Recharts for charts
-- SCSS / CSS modules for styling
+# Backend Switching
 
-Works with a FastAPI + PostgreSQL backend, or alternatively with Node.js + MongoDB backend.
+The active backend is controlled via .env configuration.
 
-## Installation and Running
+Example configuration:
+VITE_BASE_URL=http://localhost:8000/api   # FastAPI backend
+VITE_BASE_URL=http://localhost:5000/api   # Node.js backend
 
-1. Clone the repository or copy the project to a new folder.
-2. Install dependencies:
+By changing a single environment variable, the frontend can switch between:
 
-```bash
+Python + FastAPI + PostgreSQL backend
+Node.js + Express + MongoDB backend
+
+No changes in frontend code are required.
+
+# Architecture
+
+The application follows a modular architecture:
+
+Frontend (React SPA)
+        ↓
+API Layer (Axios wrapper)
+        ↓
+Backend (switchable via .env)
+
+# Key Features
+REST API communication via Axios
+Global state management with Redux Toolkit
+Persistent state with redux-persist
+Component-based architecture (React)
+TypeScript support (partial / gradual migration)
+Environment-based backend switching
+Fully decoupled frontend architecture
+
+# Development Mode
 npm install
-Create a .env file with the API URL, for example:
-
-ini
-Copy code
-VITE_API_URL=https://your-api-url.com
-Start the development server:
-
-bash
-Copy code
 npm run dev
-Open your browser at:
 
-arduino
-Copy code
+Frontend dev server runs on:
 http://localhost:5173
 
+# Production Mode
 
-## Usage
+In production, the application is built using Vite:
 
-Register in the app (optional for demo data).
-Log in or use demo data.
-Upload a data file or select a demo data source.
-Apply filters and view data in tables or charts.
-Manage data sources: delete, update, or view details.
+npm run build
+
+The output is a static bundle (dist/) that can be served by:
+- Nginx (local production server)
+- Vercel
+- Any static hosting provider
+
+# Deployment Options
+
+Local production (current implementation)
+- Nginx serves static frontend build
+- Backend runs separately (FastAPI or Express)
+- PostgreSQL / MongoDB hosted locally
+
+Cloud deployment (optional)
+- Frontend: Vercel
+- Backend: Render / VPS
+- Database: Supabase / MongoDB Atlas
+
+# Notes
+Frontend is backend-agnostic
+All API calls are routed through a single Axios configuration layer
+Switching backend requires only .env change
+Architecture supports scalable multi-backend development
