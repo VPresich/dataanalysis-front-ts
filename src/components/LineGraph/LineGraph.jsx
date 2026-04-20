@@ -9,7 +9,7 @@ Chart.register(...registerables, zoomPlugin);
 
 const getCSSVariableValue = (variableName) => {
   return getComputedStyle(document.documentElement).getPropertyValue(
-    variableName
+    variableName,
   );
 };
 
@@ -51,29 +51,30 @@ const optionalTooltipFields = [
   },
 ];
 
-const LineGraph = ({ data }) => {
+const LineGraph = ({ groupedData }) => {
   const chartRef = useRef(null);
-  if (!Array.isArray(data) || data.length === 0) {
+
+  if (!groupedData || Object.keys(groupedData).length === 0) {
     return <p>No data available to display.</p>;
   }
 
-  const groupedData = data.reduce((acc, row) => {
-    const trackNum = row.TrackNum;
-    if (!acc[trackNum]) {
-      acc[trackNum] = [];
-    }
-    acc[trackNum].push(row);
-    return acc;
-  }, {});
+  // const groupedData = data.reduce((acc, row) => {
+  //   const trackNum = row.TrackNum;
+  //   if (!acc[trackNum]) {
+  //     acc[trackNum] = [];
+  //   }
+  //   acc[trackNum].push(row);
+  //   return acc;
+  // }, {});
 
   const datasets = Object.keys(groupedData)
     .map((trackNum, index) => {
       const trackData = groupedData[trackNum];
 
-      if (trackData.length < 5) {
-        return null;
-      }
-      trackData.sort((a, b) => parseFloat(a.Time) - parseFloat(b.Time));
+      // if (trackData.length < 5) {
+      //   return null;
+      // }
+      // trackData.sort((a, b) => parseFloat(a.Time) - parseFloat(b.Time));
       const lineColor = getCSSVariableValue(`--line${index + 1}`).trim();
 
       return {
@@ -86,7 +87,7 @@ const LineGraph = ({ data }) => {
         borderColor: lineColor || "rgba(75, 192, 192, 1)",
         pointBackgroundColor: trackData.map((row) => getPointColor(row)),
         pointRadius: trackData.map((row) =>
-          row.IMMconsistent === "0" ? 4 : 3
+          row.IMMconsistent === "0" ? 4 : 3,
         ),
         tension: 0.1,
       };

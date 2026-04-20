@@ -21,7 +21,7 @@ export const selectDataForTrack = createSelector(
       return data;
     }
     return data.filter((row: DataRecord) => row.TrackNum === Number(trackNum));
-  }
+  },
 );
 
 export const selectDataForTracks = createSelector(
@@ -29,9 +29,9 @@ export const selectDataForTracks = createSelector(
   (data, trackNums) => {
     const trackNumsAsNumbers = trackNums.map(Number);
     return data.filter((row: DataRecord) =>
-      trackNumsAsNumbers.includes(Number(row.TrackNum))
+      trackNumsAsNumbers.includes(Number(row.TrackNum)),
     );
-  }
+  },
 );
 
 export const selectDataForImmConsistent = createSelector(
@@ -43,9 +43,9 @@ export const selectDataForImmConsistent = createSelector(
     }
     return data.filter(
       (row: DataRecord) =>
-        row.IMMconsistent.toString().toLowerCase() === normalizedValue
+        row.IMMconsistent.toString().toLowerCase() === normalizedValue,
     );
-  }
+  },
 );
 
 export const selectFilteredData = createSelector(
@@ -59,5 +59,28 @@ export const selectFilteredData = createSelector(
       const numericValue = Number(row.IMMconsistentValue);
       return !isNaN(numericValue) && numericValue >= normalizedValue;
     });
-  }
+  },
+);
+
+export const selectProcessedTracks = createSelector(
+  [selectFilteredData],
+  (data) => {
+    const grouped: Record<string, DataRecord[]> = {};
+
+    for (const row of data) {
+      const id = String(row.TrackNum);
+
+      if (!grouped[id]) {
+        grouped[id] = [];
+      }
+
+      grouped[id].push(row);
+    }
+
+    for (const id in grouped) {
+      grouped[id].sort((a, b) => Number(a.Time) - Number(b.Time));
+    }
+
+    return grouped;
+  },
 );

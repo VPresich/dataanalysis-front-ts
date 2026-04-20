@@ -57,7 +57,7 @@ export default function DataAnalysis() {
             sourceNumber,
             startTime,
             endTime,
-          })
+          }),
         ).unwrap();
         if (!data || (Array.isArray(data) && data.length === 0)) {
           if (isDevMode) errNotify("No User data found");
@@ -83,7 +83,7 @@ export default function DataAnalysis() {
       <div className={css.container}>
         <div className={css.auxLine}>
           <DataFilters />
-          <ShowGraphModal dataForTrack={dataForTrack} />
+          <ShowGraphModal />
         </div>
 
         <div className={css.tableContainer}>

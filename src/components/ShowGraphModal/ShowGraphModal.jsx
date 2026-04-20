@@ -4,7 +4,7 @@ import Button from "../../components/UI/Button/Button";
 import GraphComponent from "../../components/GraphComponent/GraphComponent";
 import css from "./ShowGraphModal.module.css";
 
-export default function ShowGraphModal({ dataForTrack }) {
+export default function ShowGraphModal() {
   const [showGraph, setShowGraph] = useState(false);
 
   const handleClick = () => {
@@ -22,7 +22,7 @@ export default function ShowGraphModal({ dataForTrack }) {
       </Button>
       {showGraph && (
         <ModalWrapper onClose={handleClose} isGraph={true}>
-          <GraphComponent dataForTrack={dataForTrack} />
+          <GraphComponent />
         </ModalWrapper>
       )}
     </>

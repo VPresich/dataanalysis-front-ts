@@ -50,7 +50,7 @@ export default function ExampleAnalysis() {
 
       try {
         const data = await dispatch(
-          getNonameDataBySource(sourceNumber)
+          getNonameDataBySource(sourceNumber),
         ).unwrap();
         if (!data || (Array.isArray(data) && data.length === 0)) {
           if (isDevMode) errNotify("No Noname data found");
@@ -76,7 +76,7 @@ export default function ExampleAnalysis() {
       <div className={css.container}>
         <div className={css.auxLine}>
           <DataFilters />
-          <ShowGraphModal dataForTrack={dataForTrack} />
+          <ShowGraphModal />
         </div>
         <div className={css.tableContainer}>
           {!error && dataForTrack.length > 0 ? (

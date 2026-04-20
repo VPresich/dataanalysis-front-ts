@@ -1,24 +1,22 @@
 import Plot from "react-plotly.js";
 import { getPointColor } from "../../auxiliary/getPointColor";
 
-const LineGraph3D = ({ data }) => {
-  if (!Array.isArray(data) || data.length === 0) {
+const LineGraph3D = ({ groupedData }) => {
+  if (!groupedData || Object.keys(groupedData).length === 0) {
     return <p>No data available to display.</p>;
   }
 
-  const groupedData = data.reduce((acc, row) => {
-    const trackNum = row.TrackNum;
-    if (!acc[trackNum]) {
-      acc[trackNum] = [];
-    }
-    acc[trackNum].push(row);
-    return acc;
-  }, {});
+  // const groupedData = data.reduce((acc, row) => {
+  //   const trackNum = row.TrackNum;
+  //   if (!acc[trackNum]) {
+  //     acc[trackNum] = [];
+  //   }
+  //   acc[trackNum].push(row);
+  //   return acc;
+  // }, {});
 
   const traces = Object.keys(groupedData).map((trackNum) => {
     const trackData = groupedData[trackNum];
-
-    trackData.sort((a, b) => parseFloat(a.Time) - parseFloat(b.Time));
 
     return {
       x: trackData.map((row) => parseFloat(row.X)),
@@ -40,11 +38,11 @@ const LineGraph3D = ({ data }) => {
       text: trackData.map(
         (row) =>
           `Track: ${trackNum}<br>X: ${parseFloat(row.X).toFixed(
-            2
+            2,
           )}<br>Y: ${parseFloat(row.Y).toFixed(2)}<br>Z: ${parseFloat(
-            row.Z
+            row.Z,
           ).toFixed(2)}<br>Time: ${parseFloat(row.Time).toFixed(
-            2
+            2,
           )} sec<br>IMM Consistent: ${row.IMMconsistent}<br>Speed: ${
             row.speed !== "None" ? parseFloat(row.speed).toFixed(2) : "N/A"
           }<br>Probability: ${
@@ -53,7 +51,7 @@ const LineGraph3D = ({ data }) => {
             row.IMMconsistentValue !== "None"
               ? parseFloat(row.IMMconsistentValue).toFixed(2)
               : "N/A"
-          }`
+          }`,
       ),
       hoverinfo: "text",
     };

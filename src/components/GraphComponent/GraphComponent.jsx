@@ -5,6 +5,7 @@ import LineGraph3D from "../LineGraph3D/LineGraph3D";
 import MultySelector from "../UI/MultySelector/MultySelector";
 import clsx from "clsx";
 import { selectTheme } from "../../redux/auth/selectors";
+import { selectProcessedTracks } from "../../redux/data/selectors";
 import {
   selectTrackNumbersForMultySelect,
   selectSelectedTrackNums,
@@ -12,13 +13,14 @@ import {
 import { saveSelectedTrackNums } from "../../redux/datafilters/slice";
 import css from "./GraphComponent.module.css";
 
-const GraphComponent = ({ dataForTrack }) => {
+const GraphComponent = () => {
   const dispatch = useDispatch();
   const theme = useSelector(selectTheme);
   const is3D = useSelector(selectIs3D);
   const selectedTrackNums = useSelector(selectSelectedTrackNums);
+  const processedTracks = useSelector(selectProcessedTracks);
   const trackNumbersForMultySelect = useSelector(
-    selectTrackNumbersForMultySelect
+    selectTrackNumbersForMultySelect,
   );
 
   const handleSelectionChange = (options) => {
@@ -38,9 +40,9 @@ const GraphComponent = ({ dataForTrack }) => {
         />
       </div>
       {is3D ? (
-        <LineGraph3D data={dataForTrack} />
+        <LineGraph3D groupedData={processedTracks} />
       ) : (
-        <LineGraph data={dataForTrack} />
+        <LineGraph groupedData={processedTracks} />
       )}
     </div>
   );
