@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { Line } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import { getPointColor } from "../../auxiliary/getPointColor";
+import { buildTooltipLines } from "../../auxiliary/buildTooltipLines";
 import zoomPlugin from "chartjs-plugin-zoom";
 import Button from "../UI/Button/Button";
 import css from "./LineGraph.module.css";
@@ -13,68 +14,15 @@ const getCSSVariableValue = (variableName) => {
   );
 };
 
-const optionalTooltipFields = [
-  {
-    key: "Kde",
-    label: "Kde",
-    format: (val) => (val !== "None" ? parseFloat(val).toFixed(2) : val),
-  },
-  {
-    key: "KdeWeighted",
-    label: "KdeWeighted",
-    format: (val) => (val !== "None" ? parseFloat(val).toFixed(2) : val),
-  },
-  {
-    key: "Gaussian",
-    label: "Gaussian",
-    format: (val) => (val !== "None" ? parseFloat(val).toFixed(2) : val),
-  },
-  {
-    key: "GaussianWeighted",
-    label: "GaussianWeighted",
-    format: (val) => (val !== "None" ? parseFloat(val).toFixed(2) : val),
-  },
-  {
-    key: "EvaluationNum",
-    label: "EvaluationNum",
-    format: (val) => (val !== "None" ? parseInt(val, 10) : val),
-  },
-  {
-    key: "TrackConsistent",
-    label: "TrackConsistent",
-    format: (val) => val,
-  },
-  {
-    key: "VelocityConsistent",
-    label: "VelocityConsistent",
-    format: (val) => val,
-  },
-];
-
 const LineGraph = ({ groupedData }) => {
   const chartRef = useRef(null);
 
   if (!groupedData || Object.keys(groupedData).length === 0) {
     return <p>No data available to display.</p>;
   }
-
-  // const groupedData = data.reduce((acc, row) => {
-  //   const trackNum = row.TrackNum;
-  //   if (!acc[trackNum]) {
-  //     acc[trackNum] = [];
-  //   }
-  //   acc[trackNum].push(row);
-  //   return acc;
-  // }, {});
-
   const datasets = Object.keys(groupedData)
     .map((trackNum, index) => {
       const trackData = groupedData[trackNum];
-
-      // if (trackData.length < 5) {
-      //   return null;
-      // }
-      // trackData.sort((a, b) => parseFloat(a.Time) - parseFloat(b.Time));
       const lineColor = getCSSVariableValue(`--line${index + 1}`).trim();
 
       return {
@@ -104,45 +52,15 @@ const LineGraph = ({ groupedData }) => {
       tooltip: {
         callbacks: {
           title: (tooltipItems) => {
-            const index = tooltipItems[0].dataIndex;
-            const trackNum = tooltipItems[0].dataset.label;
-            const trackData = groupedData[trackNum.replace("Track ", "")];
-            return `Track ${trackNum}, X: ${trackData[index].X}`;
+            const item = tooltipItems[0];
+            const trackNum = item.dataset.label;
+            const row = groupedData[trackNum][item.dataIndex];
+            return `Track ${trackNum}, X: ${row.X}`;
           },
           label: (tooltipItem) => {
-            const index = tooltipItem.dataIndex;
             const trackNum = tooltipItem.dataset.label;
-            const trackData = groupedData[trackNum.replace("Track ", "")];
-            const rowData = trackData[index];
-
-            const lines = [
-              `Y: ${tooltipItem.raw.y}`,
-              `Z: ${parseFloat(rowData.Z).toFixed(2)}`,
-              `Probability: ${parseFloat(rowData.probability).toFixed(5)}`,
-              `IMM Consistent: ${rowData.IMMconsistent}`,
-              `Speed: ${
-                rowData.speed !== "None"
-                  ? parseFloat(rowData.speed).toFixed(2)
-                  : rowData.speed
-              }`,
-              `Time: ${parseFloat(rowData.Time).toFixed(2)}`,
-              `IMM Consistent Value: ${
-                rowData.IMMconsistentValue !== "None"
-                  ? parseFloat(rowData.IMMconsistentValue).toFixed(2)
-                  : rowData.IMMconsistentValue
-              }`,
-            ];
-
-            optionalTooltipFields.forEach(({ key, label, format }) => {
-              if (key in rowData) {
-                const raw = rowData[key];
-                const formatted =
-                  typeof format === "function" ? format(raw) : raw;
-                lines.push(`${label}: ${formatted}`);
-              }
-            });
-
-            return lines;
+            const row = groupedData[trackNum][tooltipItem.dataIndex];
+            return buildTooltipLines(row);
           },
         },
       },

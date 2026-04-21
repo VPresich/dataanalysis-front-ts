@@ -1,20 +1,11 @@
 import Plot from "react-plotly.js";
 import { getPointColor } from "../../auxiliary/getPointColor";
+import { buildHoverText3D } from "../../auxiliary/buildHoverText3D";
 
 const LineGraph3D = ({ groupedData }) => {
   if (!groupedData || Object.keys(groupedData).length === 0) {
     return <p>No data available to display.</p>;
   }
-
-  // const groupedData = data.reduce((acc, row) => {
-  //   const trackNum = row.TrackNum;
-  //   if (!acc[trackNum]) {
-  //     acc[trackNum] = [];
-  //   }
-  //   acc[trackNum].push(row);
-  //   return acc;
-  // }, {});
-
   const traces = Object.keys(groupedData).map((trackNum) => {
     const trackData = groupedData[trackNum];
 
@@ -26,33 +17,14 @@ const LineGraph3D = ({ groupedData }) => {
       type: "scatter3d",
       name: `Track ${trackNum}`,
       line: {
-        color: `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${
-          Math.random() * 255
-        })`,
+        color: `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`,
         width: 2,
       },
       marker: {
         size: 5,
-        color: trackData.map((row) => getPointColor(row.IMMconsistent)),
+        color: trackData.map((row) => getPointColor(row)),
       },
-      text: trackData.map(
-        (row) =>
-          `Track: ${trackNum}<br>X: ${parseFloat(row.X).toFixed(
-            2,
-          )}<br>Y: ${parseFloat(row.Y).toFixed(2)}<br>Z: ${parseFloat(
-            row.Z,
-          ).toFixed(2)}<br>Time: ${parseFloat(row.Time).toFixed(
-            2,
-          )} sec<br>IMM Consistent: ${row.IMMconsistent}<br>Speed: ${
-            row.speed !== "None" ? parseFloat(row.speed).toFixed(2) : "N/A"
-          }<br>Probability: ${
-            row.probability ? parseFloat(row.probability).toFixed(5) : "N/A"
-          }<br>IMM Consistent Value: ${
-            row.IMMconsistentValue !== "None"
-              ? parseFloat(row.IMMconsistentValue).toFixed(2)
-              : "N/A"
-          }`,
-      ),
+      text: trackData.map((row) => buildHoverText3D(row, trackNum)),
       hoverinfo: "text",
     };
   });
