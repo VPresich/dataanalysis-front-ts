@@ -2,26 +2,28 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../../redux/auth/selectors";
 import css from "./Button.module.css";
-import { ButtonProps } from "./Button.types";
 import clsx from "clsx";
-const Button: React.FC<ButtonProps> = ({
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  btnAuxStyles?: string;
+  variant?: "default" | "cancel";
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+}
+const Button = ({
   children,
   onClick,
   btnAuxStyles,
   variant = "default",
+  type = "button",
   ...props
-}) => {
+}: ButtonProps) => {
   const theme = useSelector(selectTheme);
 
   return (
     <button
-      type="button"
-      className={clsx(
-        css.btn,
-        css[theme],
-        btnAuxStyles && btnAuxStyles,
-        css[variant]
-      )}
+      type={type}
+      className={clsx(css.btn, css[theme], btnAuxStyles, css[variant])}
       onClick={onClick}
       {...props}
     >

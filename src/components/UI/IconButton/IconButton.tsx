@@ -4,13 +4,18 @@ import { useSelector } from "react-redux";
 import { selectTheme } from "../../../redux/auth/selectors";
 import iconsPath from "../../../assets/img/icons.svg";
 import css from "./IconButton.module.css";
-import { IconButtonProps } from "./IconButton.types";
+
+interface IconButtonProps {
+  iconName: string;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  children: React.ReactNode;
+}
 
 const IconButton: React.FC<IconButtonProps> = ({
   iconName,
   onClick,
   children,
-}) => {
+}: IconButtonProps) => {
   const theme = useSelector(selectTheme);
 
   return (

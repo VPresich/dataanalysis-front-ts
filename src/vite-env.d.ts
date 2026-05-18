@@ -2,7 +2,7 @@
 
 interface ImportMetaEnv {
   readonly VITE_BASEURL: string;
-  readonly VITE_DEVELOPED_MODE: boolean;
+  readonly VITE_DEVELOPED_MODE: string;
 }
 
 interface ImportMeta {

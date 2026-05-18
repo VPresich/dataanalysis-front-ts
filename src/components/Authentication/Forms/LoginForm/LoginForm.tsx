@@ -5,15 +5,24 @@ import { LuKeyRound } from "react-icons/lu";
 import { LuSend } from "react-icons/lu";
 import { feedbackSchema } from "./feedbackSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { InferType } from "yup";
 import css from "./LoginForm.module.css";
 import Input from "../../../UI/Input/Input";
+
+type LoginFormData = InferType<typeof feedbackSchema>;
+
+interface LoginFormProps {
+  onSubmit: (values: LoginFormData) => void;
+  onForgotPassword: React.MouseEventHandler<HTMLButtonElement>;
+  onResendVerify: React.MouseEventHandler<HTMLButtonElement>;
+}
 
 export default function LoginForm({
   onSubmit,
   onForgotPassword,
   onResendVerify,
-}) {
-  const methods = useForm({
+}: LoginFormProps) {
+  const methods = useForm<LoginFormData>({
     resolver: yupResolver(feedbackSchema),
     defaultValues: {
       email: "",
@@ -23,7 +32,7 @@ export default function LoginForm({
 
   const { handleSubmit } = methods;
 
-  const handleLogin = async (values) => {
+  const handleLogin = async (values: LoginFormData) => {
     onSubmit(values);
   };
 

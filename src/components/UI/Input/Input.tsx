@@ -2,17 +2,24 @@ import React, { useState, ForwardedRef } from "react";
 import { useFormContext, FieldError } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import css from "./Input.module.css";
-import { InputProps } from "./InputProps.types";
+
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  name: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  value?: string;
+  placeholder?: string;
+  type?: string;
+}
 
 const Input = (
   { name, onChange, value, placeholder, type = "text", ...props }: InputProps,
-  ref: ForwardedRef<HTMLInputElement>
+  ref: ForwardedRef<HTMLInputElement>,
 ) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const {
     formState: { errors },
-  } = useFormContext<{ [key: string]: any }>();
+  } = useFormContext<{ [key: string]: unknown }>();
 
   const handleTogglePassword = () => {
     setShowPassword((prev) => !prev);

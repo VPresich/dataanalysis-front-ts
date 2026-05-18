@@ -4,7 +4,13 @@ import clsx from "clsx";
 
 import iconsPath from "../../../assets/img/icons.svg";
 import css from "./ModalWrapper.module.css";
-import { ModalWrapperProps } from "./ModalWrapper.types";
+
+interface ModalWrapperProps {
+  children: React.ReactNode;
+  onClose: () => void;
+  portalId?: string;
+  isGraph?: boolean;
+}
 
 const ModalWrapper = ({
   children,
@@ -23,7 +29,7 @@ const ModalWrapper = ({
         onClose();
       }
     },
-    [onClose]
+    [onClose],
   );
 
   const handleDocumentKeyDown = useCallback(
@@ -32,7 +38,7 @@ const ModalWrapper = ({
         onClose();
       }
     },
-    [onClose]
+    [onClose],
   );
 
   useEffect(() => {
@@ -64,7 +70,7 @@ const ModalWrapper = ({
         {children}
       </div>
     </div>,
-    portalRoot
+    portalRoot,
   );
 };
 

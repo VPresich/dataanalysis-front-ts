@@ -16,7 +16,7 @@
  */
 import { DataRecord } from "../redux/data/types";
 
-const processData = (data: DataRecord[], numPoints: number): string[] => {
+const processData = (data: DataRecord[], numPoints: number = 2): string[] => {
   const groupedData = data.reduce<Record<number, DataRecord[]>>((acc, row) => {
     const trackNum = row.TrackNum;
     if (!acc[trackNum]) {
@@ -27,7 +27,7 @@ const processData = (data: DataRecord[], numPoints: number): string[] => {
   }, {});
 
   return Object.keys(groupedData).filter(
-    (trackNum) => groupedData[Number(trackNum)].length >= numPoints
+    (trackNum) => groupedData[Number(trackNum)].length >= numPoints,
   );
 };
 
