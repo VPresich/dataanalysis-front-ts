@@ -1,19 +1,39 @@
 import { useForm, FormProvider, Controller } from "react-hook-form";
 import Button from "../../../UI/Button/Button";
 import Input from "../../../UI/Input/Input";
+import { feedbackSchema } from "./feedbackSchema";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { InferType } from "yup";
 import { MdKeyboardReturn } from "react-icons/md";
 import ReactIconButton from "../../../UI/ReactIconButton/ReactIconButton";
 import css from "./SendLinkForm.module.css";
 
-export default function SendLinkForm({ onSubmit, onBack, title, text }) {
-  const methods = useForm({
+type LoginFormData = InferType<typeof feedbackSchema>;
+
+interface SendLinkFormProps {
+  onSubmit: (values: LoginFormData) => void;
+  onBack: React.MouseEventHandler<HTMLButtonElement>;
+  title: string;
+  text: string;
+}
+
+export default function SendLinkForm({
+  onSubmit,
+  onBack,
+  title,
+  text,
+}: SendLinkFormProps) {
+  const methods = useForm<LoginFormData>({
+    resolver: yupResolver(feedbackSchema),
     defaultValues: { email: "" },
   });
 
   const { handleSubmit } = methods;
 
-  const handleSendLink = async (values) => {
-    onSubmit && onSubmit(values);
+  const handleSendLink = async (values: LoginFormData) => {
+    if (onSubmit) {
+      onSubmit(values);
+    }
   };
 
   return (

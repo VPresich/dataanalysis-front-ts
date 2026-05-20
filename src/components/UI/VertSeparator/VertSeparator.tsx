@@ -1,7 +1,6 @@
-import React from "react";
 import css from "./VertSeparator.module.css";
 
-const VertSeparator: React.FC = () => {
+const VertSeparator = () => {
   return <div className={css.separator}></div>;
 };
 

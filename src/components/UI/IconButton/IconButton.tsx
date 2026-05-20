@@ -11,11 +11,7 @@ interface IconButtonProps {
   children: React.ReactNode;
 }
 
-const IconButton: React.FC<IconButtonProps> = ({
-  iconName,
-  onClick,
-  children,
-}: IconButtonProps) => {
+const IconButton = ({ iconName, onClick, children }: IconButtonProps) => {
   const theme = useSelector(selectTheme);
 
   return (

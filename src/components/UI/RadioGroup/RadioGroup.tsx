@@ -1,10 +1,15 @@
 import clsx from "clsx";
 import { Controller, useFormContext } from "react-hook-form";
 import css from "./RadioGroup.module.css";
-import { RadioGroupProps } from "./RadioGroup.types";
+import { Theme } from "../../../redux/auth/types";
 
-const RadioGroup: React.FC<RadioGroupProps> = ({ name, options }) => {
-  const { control } = useFormContext();
+export interface RadioGroupProps {
+  name: string;
+  options: Theme[];
+}
+
+const RadioGroup = ({ name, options }: RadioGroupProps) => {
+  const { control } = useFormContext<Record<string, unknown>>();
 
   return (
     <Controller

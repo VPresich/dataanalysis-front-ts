@@ -5,7 +5,11 @@ import { selectIs3D } from "../../../redux/datafilters/selectors";
 import { selectTheme } from "../../../redux/auth/selectors";
 import css from "./ToggleButton.module.css";
 
-const ToggleButton = ({ onToggle }) => {
+interface ToggleButtonProps {
+  onToggle: () => void;
+}
+
+const ToggleButton = ({ onToggle }: ToggleButtonProps) => {
   const theme = useSelector(selectTheme);
   const is3D = useSelector(selectIs3D);
   return (

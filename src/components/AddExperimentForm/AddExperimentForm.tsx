@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import clsx from "clsx";
 import { selectTheme } from "../../redux/auth/selectors";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { InferType } from "yup";
 import Input from "../UI/Input/Input";
 import TextArea from "../UI/TextArea/TextArea";
 import Button from "../UI/Button/Button";
@@ -12,23 +13,31 @@ import { createFeedbackSchema } from "./createFeedbackSchema";
 import iconsPath from "../../assets/img/icons.svg";
 import css from "./AddExperimentForm.module.css";
 
-const AddExperimentForm = ({ onSubmitForm }) => {
+export type AddExperimentFormData = InferType<
+  ReturnType<typeof createFeedbackSchema>
+>;
+
+interface AddExperimentFormProps {
+  onSubmitForm: (values: AddExperimentFormData) => void;
+}
+
+const AddExperimentForm = ({ onSubmitForm }: AddExperimentFormProps) => {
   const existingNumbers = useSelector(selectSourceNumbers);
   const feedbackSchema = createFeedbackSchema(existingNumbers);
   const methods = useForm({
     resolver: yupResolver(feedbackSchema),
     defaultValues: {
-      source_number: "",
+      source_number: undefined,
       source_name: "",
       file_name: "",
-      datafile: null,
+      datafile: undefined,
       comment: "",
     },
   });
   const theme = useSelector(selectTheme);
   const { setValue, handleSubmit, control } = methods;
 
-  const handleFileSelected = (file) => {
+  const handleFileSelected = (file: File) => {
     if (!file) return;
     setValue("datafile", file, { shouldValidate: true });
     setValue("file_name", file.name, { shouldValidate: true });
@@ -51,12 +60,11 @@ const AddExperimentForm = ({ onSubmitForm }) => {
               <Controller
                 name="file_name"
                 control={control}
-                render={({ field, fieldState }) => (
+                render={({ field }) => (
                   <Input
                     {...field}
                     placeholder="File name"
                     type="text"
-                    error={fieldState?.error?.message}
                     readOnly
                   />
                 )}
@@ -97,12 +105,12 @@ const AddExperimentForm = ({ onSubmitForm }) => {
                 <Controller
                   name="source_number"
                   control={control}
-                  render={({ field, fieldState }) => (
+                  render={({ field }) => (
                     <Input
                       {...field}
+                      value={field.value ? String(field.value) : ""}
                       placeholder="Source number"
                       type="number"
-                      error={fieldState?.error?.message}
                     />
                   )}
                 />
@@ -110,12 +118,12 @@ const AddExperimentForm = ({ onSubmitForm }) => {
                 <Controller
                   name="source_name"
                   control={control}
-                  render={({ field, fieldState }) => (
+                  render={({ field }) => (
                     <Input
                       {...field}
+                      value={field.value ?? ""}
                       placeholder="Source name"
                       type="text"
-                      error={fieldState?.error?.message}
                     />
                   )}
                 />
@@ -123,13 +131,12 @@ const AddExperimentForm = ({ onSubmitForm }) => {
                 <Controller
                   name="comment"
                   control={control}
-                  render={({ field, fieldState }) => (
+                  render={({ field }) => (
                     <TextArea
                       {...field}
+                      value={field.value ?? ""}
                       placeholder="Comment"
-                      type="text"
                       className={css.auxTextArea}
-                      error={fieldState?.error?.message}
                     />
                   )}
                 />

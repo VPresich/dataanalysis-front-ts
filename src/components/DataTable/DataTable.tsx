@@ -1,28 +1,19 @@
 import clsx from "clsx";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../redux/auth/selectors";
+import { DataRecord } from "../../redux/data/types";
 import css from "./DataTable.module.css";
 
-const optionalColumns = [
-  { key: "Kde", label: "Kde" },
-  { key: "KdeWeighted", label: "KdeWeighted" },
-  { key: "Gaussian", label: "Gaussian" },
-  { key: "GaussianWeighted", label: "GaussianWeighted" },
-  { key: "EvaluationNum", label: "EvaluationNum" },
-  { key: "TrackConsistent", label: "TrackConsistent" },
-  { key: "VelocityConsistent", label: "VelocityConsistent" },
-];
+interface DataTableProps {
+  data: DataRecord;
+}
 
-const DataTable = ({ data }) => {
+const DataTable = ({ data }: DataTableProps) => {
   const theme = useSelector(selectTheme);
   if (!Array.isArray(data)) {
     console.error("Expected data to be an array, but got:", data);
     return <p>No data available</p>;
   }
-
-  const availableOptionalColumns = optionalColumns.filter(({ key }) =>
-    data.some((item) => key in item)
-  );
 
   return (
     <table className={css.table}>
@@ -45,12 +36,13 @@ const DataTable = ({ data }) => {
           <th className={clsx(css.th, css[theme])}>Probability</th>
           <th className={clsx(css.th, css[theme])}>Track</th>
           <th className={clsx(css.th, css[theme])}>Time</th>
-
-          {availableOptionalColumns.map(({ key, label }) => (
-            <th key={key} className={clsx(css.th, css[theme])}>
-              {label}
-            </th>
-          ))}
+          <th className={clsx(css.th, css[theme])}>Kde</th>
+          <th className={clsx(css.th, css[theme])}>Kde Weighted</th>
+          <th className={clsx(css.th, css[theme])}>Gaussian</th>
+          <th className={clsx(css.th, css[theme])}>Gaussian Weighted</th>
+          <th className={clsx(css.th, css[theme])}>Evaluation Num</th>
+          <th className={clsx(css.th, css[theme])}>Track Consistent</th>
+          <th className={clsx(css.th, css[theme])}>Velocity Consistent</th>
         </tr>
       </thead>
       <tbody className={css.tbody}>
@@ -73,12 +65,13 @@ const DataTable = ({ data }) => {
             <td className={css.td}>{item.probability}</td>
             <td className={css.td}>{item.TrackNum}</td>
             <td className={css.td}>{item.Time}</td>
-
-            {availableOptionalColumns.map(({ key }) => (
-              <td key={key} className={css.td}>
-                {item[key]}
-              </td>
-            ))}
+            <td className={css.td}>{String(item.Kde ?? "")}</td>
+            <td className={css.td}>{String(item.KdeWeighted ?? "")}</td>
+            <td className={css.td}>{String(item.Gaussian ?? "")}</td>
+            <td className={css.td}>{String(item.GaussianWeighted ?? "")}</td>
+            <td className={css.td}>{String(item.EvaluationNum ?? "")}</td>
+            <td className={css.td}>{String(item.TrackConsistent ?? "")}</td>
+            <td className={css.td}>{String(item.VelocityConsistent ?? "")}</td>
           </tr>
         ))}
       </tbody>

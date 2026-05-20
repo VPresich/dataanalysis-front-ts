@@ -9,9 +9,9 @@ import css from "./EditExperimentForm.module.css";
 
 const EditExperimentForm = ({ experiment, handleExperimentSave }) => {
   const methods = useForm({
+    resolver: yupResolver(feedbackSchema),
     defaultValues: {
-      resolver: yupResolver(feedbackSchema),
-      source_number: experiment.source_number || "",
+      source_number: experiment.source_number,
       source_name: experiment.source_name || "",
       file_name: experiment.file_name || "",
       comment: experiment.comment || "",
@@ -23,7 +23,7 @@ const EditExperimentForm = ({ experiment, handleExperimentSave }) => {
   const onSubmit = (values) => {
     const changedFields = getChangedFields(
       values,
-      methods.formState.defaultValues
+      methods.formState.defaultValues,
     );
     handleExperimentSave && handleExperimentSave(changedFields);
   };
@@ -47,7 +47,7 @@ const EditExperimentForm = ({ experiment, handleExperimentSave }) => {
               render={({ field }) => (
                 <Input
                   {...field}
-                  label="Source number"
+                  value={field.value ? String(field.value) : ""}
                   type="number"
                   readOnly
                 />
@@ -58,7 +58,12 @@ const EditExperimentForm = ({ experiment, handleExperimentSave }) => {
               name="source_name"
               control={control}
               render={({ field }) => (
-                <Input {...field} label="Source name" type="text" />
+                <Input
+                  {...field}
+                  value={field.value ? String(field.value) : ""}
+                  placeholder="Source name"
+                  type="text"
+                />
               )}
             />
 
@@ -66,7 +71,12 @@ const EditExperimentForm = ({ experiment, handleExperimentSave }) => {
               name="file_name"
               control={control}
               render={({ field }) => (
-                <Input {...field} label="File name" type="text" />
+                <Input
+                  {...field}
+                  value={field.value ? String(field.value) : ""}
+                  placeholder="File name"
+                  type="text"
+                />
               )}
             />
 
@@ -76,7 +86,8 @@ const EditExperimentForm = ({ experiment, handleExperimentSave }) => {
               render={({ field }) => (
                 <TextArea
                   {...field}
-                  label="Comment"
+                  value={field.value ? String(field.value) : ""}
+                  placeholder="Comment"
                   className={css.auxTextArea}
                 />
               )}

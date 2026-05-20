@@ -1,17 +1,27 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import clsx from "clsx";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { feedbackSchema } from "./feedbackScema";
+import { feedbackSchema } from "./feedbackSchema";
 import InputWithButton from "../InputWithButton/InputWithButton";
-import { SearchFormProps, SearchFormValues } from "./SearchForm.types";
 
-const SearchForm: React.FC<SearchFormProps> = ({
+interface SearchFormProps {
+  onSearch: (value: string) => void;
+  initValue?: string;
+  className?: string | null;
+  placeholder?: string;
+}
+
+interface SearchFormValues {
+  topic: string;
+}
+
+const SearchForm = ({
   onSearch,
   initValue = "",
   className = null,
   placeholder = "Search",
-}) => {
+}: SearchFormProps) => {
   const methods = useForm<SearchFormValues>({
     resolver: yupResolver(feedbackSchema),
     defaultValues: {
@@ -30,17 +40,18 @@ const SearchForm: React.FC<SearchFormProps> = ({
     onSearch(value);
   };
 
+  const handleSearchSubmit = () => {
+    handleSubmit(onSubmit)();
+  };
+
   return (
     <FormProvider {...methods}>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={clsx(className && className)}
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className={clsx(className)}>
         <InputWithButton
           name="topic"
           placeholder={placeholder}
           type="text"
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSearchSubmit}
         />
       </form>
     </FormProvider>

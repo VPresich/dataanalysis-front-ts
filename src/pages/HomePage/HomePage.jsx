@@ -55,7 +55,7 @@ export default function HomePage() {
       dispatch(refreshUser());
       navigate("/");
     }
-  }, [dispatch, location.search, navigate]);
+  }, [dispatch, location, navigate]);
 
   const theme = useSelector(selectTheme);
 

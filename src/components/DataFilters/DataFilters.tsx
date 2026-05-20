@@ -5,6 +5,7 @@ import DropDownSelector from "../UI/DropDownSelector/DropDownSelector";
 import MultySelector from "../UI/MultySelector/MultySelector";
 import SearchForm from "../UI/SearchForm/SearchForm";
 import Button from "../UI/Button/Button";
+import { TimeDataPayload } from "../../redux/datafilters/types";
 import ToggleButton from "../UI/ToggleButton/ToggleButton";
 import clsx from "clsx";
 import {
@@ -36,7 +37,7 @@ const DataFilters = () => {
   const theme = useSelector(selectTheme);
   const selectedTrackNums = useSelector(selectSelectedTrackNums);
   const trackNumbersForMultySelect = useSelector(
-    selectTrackNumbersForMultySelect
+    selectTrackNumbersForMultySelect,
   );
   const immConsistentValues = useSelector(selectImmConsistentValues);
   const immConsistent = useSelector(selectImmConsistent);
@@ -47,30 +48,32 @@ const DataFilters = () => {
   const sourceNumbers = useSelector(selectSourceNumbers);
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  const { id: sourceNumber } = useParams();
+  const { id } = useParams<{ id: string }>();
+  const sourceNumber = id || "";
 
   const location = useLocation();
   const hideTimeForm =
     location.pathname === "/example" ||
     /^\/example\/\d+$/.test(location.pathname);
 
-  const handleSourceChange = async (sourceNumber) => {
+  const handleSourceChange = async (sourceNum: string | number | undefined) => {
+    if (!sourceNum) return;
     if (isLoggedIn) {
-      navigate(`/data/${sourceNumber}`);
+      navigate(`/data/${sourceNum}`);
     } else {
-      navigate(`/example/${sourceNumber}`);
+      navigate(`/example/${sourceNum}`);
     }
   };
 
-  const handleImmConsistent = (value) => {
+  const handleImmConsistent = (value: string) => {
     dispatch(saveImmConsistent(value));
   };
 
-  const handleSearch = (value) => {
+  const handleSearch = (value: string) => {
     dispatch(saveImmConsistentMaxValue(value));
   };
 
-  const handleChangedTime = async (value) => {
+  const handleChangedTime = async (value: TimeDataPayload) => {
     dispatch(saveTime(value));
   };
 
@@ -78,7 +81,7 @@ const DataFilters = () => {
     dispatch(resetDataFilters());
   };
 
-  const handleSelectionChange = (options) => {
+  const handleSelectionChange = (options: string[]) => {
     dispatch(saveSelectedTrackNums(options));
   };
 
@@ -122,9 +125,9 @@ const DataFilters = () => {
       <div className={css.wrapper}>
         <p className={clsx(css.label, css[theme])}>Experiment N:</p>
         <DropDownSelector
-          btnLabel={sourceNumber}
-          options={sourceNumbers}
-          selectedOption={sourceNumber}
+          btnLabel={sourceNumber.toString()}
+          options={sourceNumbers.map(String)}
+          selectedOption={sourceNumber.toString()}
           onChange={handleSourceChange}
           btnCSSClass={css.btnDropDown}
           dropdownCSSClass={css.listDropDown}
@@ -144,7 +147,7 @@ const DataFilters = () => {
         Reset
       </Button>
       <div className={css.wrapper}>
-        <ToggleButton is3D={is3D} onToggle={handleToggle} />
+        <ToggleButton onToggle={handleToggle} />
       </div>
     </div>
   );

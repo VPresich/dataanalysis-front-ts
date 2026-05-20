@@ -3,9 +3,20 @@ import iconsPath from "../../../assets/img/icons.svg";
 import Button from "../Button/Button";
 import clsx from "clsx";
 import css from "./MultySelector.module.css";
-import { MultySelectorProps } from "./MultySelector.types";
 
-const MultySelector: React.FC<MultySelectorProps> = ({
+export interface MultySelectorProps {
+  btnLabel: string;
+  options: string[];
+  selectedOptions?: string[];
+  onChange: (values: string[]) => void;
+
+  optionCSSClass?: string;
+  dropdownCSSClass?: string;
+  btnCSSClass?: string;
+  iconCSSClass?: string;
+}
+
+const MultySelector = ({
   btnLabel,
   options,
   selectedOptions = [],
@@ -14,7 +25,7 @@ const MultySelector: React.FC<MultySelectorProps> = ({
   dropdownCSSClass,
   btnCSSClass,
   iconCSSClass,
-}) => {
+}: MultySelectorProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,7 +88,7 @@ const MultySelector: React.FC<MultySelectorProps> = ({
                   className={clsx(
                     css.option,
                     { [css.selected]: selectedOptions.includes(option) },
-                    optionCSSClass
+                    optionCSSClass,
                   )}
                 >
                   <input

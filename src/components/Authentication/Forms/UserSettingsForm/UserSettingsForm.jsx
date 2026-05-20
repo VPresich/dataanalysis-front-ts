@@ -35,7 +35,7 @@ const UserSettingsForm = ({ handleUserSave }) => {
   const onSubmit = async (values) => {
     const changedFields = getChangedFields(
       values,
-      methods.formState.defaultValues
+      methods.formState.defaultValues,
     );
     console.log("UserProfile", values, changedFields);
     handleUserSave && handleUserSave(changedFields);
@@ -106,7 +106,7 @@ const UserSettingsForm = ({ handleUserSave }) => {
             />
             <Controller
               name="password"
-              control={methods.control}
+              control={control}
               render={({ field }) => (
                 <Input {...field} placeholder="Password" type="password" />
               )}

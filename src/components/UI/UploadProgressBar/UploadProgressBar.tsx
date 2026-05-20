@@ -3,7 +3,11 @@ import { useSelector } from "react-redux";
 import clsx from "clsx";
 import { selectTheme } from "../../../redux/auth/selectors";
 import css from "./UploadProgressBar.module.css";
-import { UploadProgressBarProps } from "./UploadProgressBar.types";
+
+export interface UploadProgressBarProps {
+  progress: number;
+  isLoading: boolean;
+}
 
 const UploadProgressBar: React.FC<UploadProgressBarProps> = ({
   progress,

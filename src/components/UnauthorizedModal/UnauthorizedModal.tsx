@@ -1,9 +1,12 @@
 import UnauthorizedForm from "../UnauthorizedForm/UnauthorizedForm";
 import ModalWrapper from "../UI/ModalWrapper/ModalWrapper";
 
-export default function UnauthorizedModal({ onClose }) {
-  const handleUnauthorizedSubmit = (e) => {
-    e.preventDefault();
+interface UnauthorizedModalProps {
+  onClose: () => void;
+}
+
+export default function UnauthorizedModal({ onClose }: UnauthorizedModalProps) {
+  const handleUnauthorizedSubmit = () => {
     onClose();
   };
   return (

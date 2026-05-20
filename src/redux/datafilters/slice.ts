@@ -24,10 +24,7 @@ const dataFiltersSlice = createSlice({
       state.trackNum = action.payload;
     },
 
-    saveSelectedTrackNums: (
-      state,
-      action: PayloadAction<(string | number)[]>
-    ) => {
+    saveSelectedTrackNums: (state, action: PayloadAction<string[]>) => {
       state.selectedTrackNums = action.payload;
     },
 
@@ -39,7 +36,7 @@ const dataFiltersSlice = createSlice({
       state.immConsistentMaxValue = action.payload;
     },
 
-    updateTrackNumbers: (state, action: PayloadAction<(string | number)[]>) => {
+    updateTrackNumbers: (state, action: PayloadAction<string[]>) => {
       state.selectedTrackNums = [...action.payload];
       state.trackNumbers = action.payload;
       state.trackNumbers.push("All");
@@ -47,7 +44,7 @@ const dataFiltersSlice = createSlice({
 
     saveTime: (
       state,
-      action: PayloadAction<{ startTime: string; endTime: string }>
+      action: PayloadAction<{ startTime: string; endTime: string }>,
     ) => {
       state.startTime = action.payload.startTime;
       state.endTime = action.payload.endTime;

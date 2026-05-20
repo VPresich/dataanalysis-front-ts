@@ -2,9 +2,18 @@ import React, { useState } from "react";
 import iconsPath from "../../../assets/img/icons.svg";
 import clsx from "clsx";
 import css from "./DropDownSelector.module.css";
-import { DropDownSelectorProps } from "./DropDownSelector.types";
 
-const DropDownSelector: React.FC<DropDownSelectorProps> = ({
+export interface DropDownSelectorProps {
+  btnLabel: string;
+  options: string[];
+  selectedOption: string;
+  onChange: (value: string) => void;
+  btnCSSClass?: string;
+  dropdownCSSClass?: string;
+  optionCSSClass?: string;
+}
+
+const DropDownSelector = ({
   btnLabel,
   options,
   selectedOption,
@@ -12,7 +21,7 @@ const DropDownSelector: React.FC<DropDownSelectorProps> = ({
   optionCSSClass,
   dropdownCSSClass,
   btnCSSClass,
-}) => {
+}: DropDownSelectorProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +35,7 @@ const DropDownSelector: React.FC<DropDownSelectorProps> = ({
         className={clsx(
           css.btn,
           { [css.open]: isOpen },
-          btnCSSClass && btnCSSClass
+          btnCSSClass && btnCSSClass,
         )}
         onClick={() => setIsOpen(!isOpen)}
         type="button"
@@ -43,7 +52,7 @@ const DropDownSelector: React.FC<DropDownSelectorProps> = ({
         <div
           className={clsx(
             css.dropdownWrapper,
-            dropdownCSSClass && dropdownCSSClass
+            dropdownCSSClass && dropdownCSSClass,
           )}
         >
           <div className={clsx(css.dropdown)}>
@@ -56,7 +65,7 @@ const DropDownSelector: React.FC<DropDownSelectorProps> = ({
                     [css.selected]: selectedOption === option,
                     [css.inactive]: selectedOption !== option,
                   },
-                  optionCSSClass && optionCSSClass
+                  optionCSSClass && optionCSSClass,
                 )}
               >
                 <input

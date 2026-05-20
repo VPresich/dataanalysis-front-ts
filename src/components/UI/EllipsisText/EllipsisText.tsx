@@ -1,12 +1,12 @@
-import React from "react";
 import LinesEllipsis from "react-lines-ellipsis";
-import { EllipsisTextProps } from "./EllipsisText.types";
 
-const EllipsisText: React.FC<EllipsisTextProps> = ({
-  text,
-  maxLines = 1,
-  className,
-}) => {
+export interface EllipsisTextProps {
+  text: string;
+  maxLines?: number;
+  className?: string;
+}
+
+const EllipsisText = ({ text, maxLines = 1, className }: EllipsisTextProps) => {
   return (
     <LinesEllipsis
       text={text}

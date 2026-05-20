@@ -1,14 +1,18 @@
 import { useForm, FormProvider } from "react-hook-form";
 import Button from "../UI/Button/Button";
 import css from "./UnauthorizedForm.module.css";
-import { UnauthorizedFormProps } from "./UnauthorizedForm.types";
 
-const UnauthorizedForm: React.FC<UnauthorizedFormProps> = ({ onSubmit }) => {
+interface UnauthorizedFormProps {
+  onSubmit: () => void;
+}
+
+const UnauthorizedForm = ({ onSubmit }: UnauthorizedFormProps) => {
   const methods = useForm();
+  const { handleSubmit } = methods;
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={onSubmit} className={css.form}>
+      <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
         <div className={css.content}>
           <div className={css.titleContainer}>
             <h3 className={css.title}>Access Denied</h3>

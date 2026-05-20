@@ -7,7 +7,7 @@ import Logo from "../Logo/Logo";
 import css from "./AppBar.module.css";
 
 export default function AppBar() {
-  const headerRef = useRef();
+  const headerRef = useRef<HTMLHeadingElement | null>(null);
 
   const handleScroll = () => {
     if (headerRef.current) {
@@ -25,7 +25,7 @@ export default function AppBar() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [headerRef]);
 
   return (
     <header ref={headerRef} className={css.header}>

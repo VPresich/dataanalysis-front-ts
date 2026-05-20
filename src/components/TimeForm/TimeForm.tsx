@@ -1,35 +1,36 @@
-import { useEffect } from "react";
 import { useForm, FormProvider, Controller } from "react-hook-form";
 import { feedbackSchema } from "./feedbackSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { InferType } from "yup";
+import { TimeDataPayload } from "../../redux/datafilters/types";
 import Input from "../UI/Input/Input";
 import Button from "../UI/Button/Button";
 import css from "./TimeForm.module.css";
 
-const TimeForm = ({ initialValues, onChange }) => {
-  const methods = useForm({
+export type TimeFormData = InferType<typeof feedbackSchema>;
+
+interface TimeFormProps {
+  initialValues: TimeFormData;
+  onChange: (values: TimeDataPayload) => void;
+}
+
+const TimeForm = ({ initialValues, onChange }: TimeFormProps) => {
+  const methods = useForm<TimeFormData>({
     resolver: yupResolver(feedbackSchema),
-    defaultValues: initialValues || {
-      startTime: "",
-      endTime: "",
-    },
+    values: initialValues,
   });
+
   const {
     handleSubmit,
     control,
     formState: { isDirty },
   } = methods;
 
-  const onSubmit = (data) => {
-    console.log("data:", data);
+  const onSubmit = (data: TimeFormData) => {
     if (onChange) {
-      onChange(data);
+      onChange(data as TimeDataPayload);
     }
   };
-
-  useEffect(() => {
-    methods.reset(initialValues);
-  }, [initialValues, methods]);
 
   return (
     <FormProvider {...methods}>

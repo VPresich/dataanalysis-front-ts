@@ -1,4 +1,3 @@
-import React from "react";
 import {
   useFormContext,
   Controller,
@@ -7,14 +6,20 @@ import {
 } from "react-hook-form";
 import iconsPath from "../../../assets/img/icons.svg";
 import css from "./InputWithButton.module.css";
-import { InputWithButtonProps } from "./InputWithButton.types";
 
-const InputWithButton: React.FC<InputWithButtonProps> = ({
+export interface InputWithButtonProps {
+  name: string;
+  placeholder?: string;
+  type?: React.HTMLInputTypeAttribute;
+  onSubmit: () => void;
+}
+
+const InputWithButton = ({
   name,
   placeholder,
   type = "text",
   onSubmit,
-}) => {
+}: InputWithButtonProps) => {
   const {
     control,
     formState: { errors },
@@ -31,6 +36,7 @@ const InputWithButton: React.FC<InputWithButtonProps> = ({
           <div className={css.inputContainer}>
             <input
               {...field}
+              value={field.value ?? ""}
               placeholder={placeholder}
               className={css.input}
               type={type}

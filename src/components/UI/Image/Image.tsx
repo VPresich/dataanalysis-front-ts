@@ -3,9 +3,13 @@ import { useSelector } from "react-redux";
 import { selectTheme } from "../../../redux/auth/selectors";
 import clsx from "clsx";
 import css from "./Image.module.css";
-import { ImageProps } from "./Image.types";
 
-const Image: React.FC<ImageProps> = ({ imgUrl, name }) => {
+export interface ImageProps {
+  imgUrl: string;
+  name: string;
+}
+
+const Image: React.FC<ImageProps> = ({ imgUrl, name }: ImageProps) => {
   const theme = useSelector(selectTheme);
 
   return (

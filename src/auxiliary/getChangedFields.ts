@@ -14,9 +14,9 @@
  * @param defaultValues - initial form values to compare against
  * @returns Partial<T> - object containing only changed fields
  */
-export const getChangedFields = <T extends Record<string, any>>(
+export const getChangedFields = <T extends Record<string, unknown>>(
   values: T,
-  defaultValues: T
+  defaultValues: T,
 ): Partial<T> => {
   return Object.entries(values).reduce<Partial<T>>((acc, [key, value]) => {
     const defaultValue = defaultValues[key as keyof T];
@@ -25,7 +25,7 @@ export const getChangedFields = <T extends Record<string, any>>(
       (key === "avatar" && value) ||
       (key !== "avatar" && value !== defaultValue && value !== "")
     ) {
-      acc[key as keyof T] = value;
+      acc[key as keyof T] = value as T[keyof T];
     }
 
     return acc;

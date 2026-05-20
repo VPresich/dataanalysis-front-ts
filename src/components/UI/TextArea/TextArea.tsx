@@ -3,18 +3,17 @@ import { useFormContext, FieldError } from "react-hook-form";
 import clsx from "clsx";
 import css from "./TextArea.module.css";
 
-interface TextAreaProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   name: string;
 }
 
 const TextArea = (
   { name, className, ...props }: TextAreaProps,
-  ref: ForwardedRef<HTMLTextAreaElement>
+  ref: ForwardedRef<HTMLTextAreaElement>,
 ) => {
   const {
     formState: { errors },
-  } = useFormContext<{ [key: string]: any }>();
+  } = useFormContext<{ [key: string]: unknown }>();
 
   const fieldError = errors[name] as FieldError | undefined;
 

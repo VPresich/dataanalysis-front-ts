@@ -16,7 +16,7 @@ const ColorSelector = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const [isOpen, setIsOpen] = useState(false);
 
-  if (!isLoggedIn) return false;
+  if (!isLoggedIn) return null;
 
   const handleThemeChange = (event) => {
     const selectedTheme = event.target.value.toLowerCase();

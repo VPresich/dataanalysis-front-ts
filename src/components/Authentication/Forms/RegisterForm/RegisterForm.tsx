@@ -3,9 +3,16 @@ import Button from "../../../UI/Button/Button";
 import Input from "../../../UI/Input/Input";
 import { feedbackSchema } from "./feedbackSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { InferType } from "yup";
 import css from "./RegisterForm.module.css";
 
-export default function RegisterForm({ handleRegistration }) {
+type RegisterFormData = InferType<typeof feedbackSchema>;
+
+interface RegisterProps {
+  handleRegistration: (values: RegisterFormData) => void;
+}
+
+export default function RegisterForm({ handleRegistration }: RegisterProps) {
   const methods = useForm({
     resolver: yupResolver(feedbackSchema),
     defaultValues: {
@@ -17,8 +24,7 @@ export default function RegisterForm({ handleRegistration }) {
 
   const { handleSubmit } = methods;
 
-  const onSubmit = async (values) => {
-    // console.log("SUBMIT Registration", values);
+  const onSubmit = async (values: RegisterFormData) => {
     handleRegistration(values);
   };
 
@@ -27,7 +33,7 @@ export default function RegisterForm({ handleRegistration }) {
       <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
         <div className={css.content}>
           <div className={css.titleContainer}>
-            <h3 className={css.title}>Registraition</h3>
+            <h3 className={css.title}>Registration</h3>
             <p className={css.text}>
               Thank you for your interest in our platform! In order to register,
               we need some information. Please provide us with the following
