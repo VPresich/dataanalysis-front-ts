@@ -10,7 +10,7 @@ import { errNotify, successNotify } from "../../auxiliary/notification";
 
 const isDevMode = import.meta.env.VITE_DEVELOPED_MODE === "true";
 
-export default function DataAnalysisHome() {
+export default function DataAnalysisHome(): JSX.Element {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsLoading);
   useEffect(() => {

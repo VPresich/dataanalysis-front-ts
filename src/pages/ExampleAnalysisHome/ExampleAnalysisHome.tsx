@@ -8,7 +8,7 @@ import { errNotify, successNotify } from "../../auxiliary/notification";
 
 const isDevMode = import.meta.env.VITE_DEVELOPED_MODE === "true";
 
-export default function ExampleAnalysisHome() {
+export default function ExampleAnalysisHome(): JSX.Element {
   const dispatch = useAppDispatch();
   useEffect(() => {
     const initApp = async () => {

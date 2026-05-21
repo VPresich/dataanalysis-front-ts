@@ -22,7 +22,7 @@ import css from "./ExampleAnalysis.module.css";
 
 const isDevMode = import.meta.env.VITE_DEVELOPED_MODE === "true";
 
-export default function ExampleAnalysis() {
+export default function ExampleAnalysis(): JSX.Element {
   const dataLength = useAppSelector(selectDataForAnalysisLength);
   const dispatch = useAppDispatch();
 
