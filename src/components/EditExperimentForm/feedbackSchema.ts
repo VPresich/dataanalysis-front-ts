@@ -1,6 +1,7 @@
 import * as Yup from "yup";
 
 export const feedbackSchema = Yup.object().shape({
+  source_number: Yup.number().required(),
   source_name: Yup.string()
     .min(3, "Too short")
     .max(50, "Too long")

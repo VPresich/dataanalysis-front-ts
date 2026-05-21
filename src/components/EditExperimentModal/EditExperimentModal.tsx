@@ -16,8 +16,10 @@ interface EditExperimentModalProps {
 export default function EditExperimentModal({
   onClose,
   sourceNumber,
-}: EditExperimentModalProps): JSX.Element {
-  const source = useAppSelector(selectSourceByNumber(sourceNumber));
+}: EditExperimentModalProps): JSX.Element | null {
+  const source = useAppSelector((state) =>
+    selectSourceByNumber(sourceNumber)(state),
+  );
   const dispatch = useAppDispatch();
 
   const handleExperimentSave = (values: DataSourceUpdate) => {
@@ -35,6 +37,10 @@ export default function EditExperimentModal({
         }
       });
   };
+
+  if (!source) {
+    return null;
+  }
 
   return (
     <ModalWrapper onClose={onClose}>

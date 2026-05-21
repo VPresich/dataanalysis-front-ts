@@ -1,6 +1,6 @@
 export interface DataSource {
   source_number: number;
-  source_name: string;
+  source_name?: string | null;
   file_name: string;
   comment?: string | null;
 }
@@ -10,8 +10,8 @@ export interface DataSourceCreate extends DataSource {
 }
 
 export interface DataSourceUpdate {
-  source_name?: string;
-  file_name?: string;
+  source_name?: string | null;
+  file_name?: string | null;
   comment?: string | null;
 }
 

@@ -1,36 +1,46 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../redux/hooks";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import clsx from "clsx";
+import { DataSourceResponse } from "../../redux/datasources/types";
 import DeleteExperimentModal from "../DeleteExperimentModal/DeleteExperimentModal";
 import EditExperimentModal from "../EditExperimentModal/EditExperimentModal";
 import UnauthorizedModal from "../UnauthorizedModal/UnauthorizedModal";
 import { selectIsLoggedIn, selectTheme } from "../../redux/auth/selectors";
 import css from "./ExperimentCard.module.css";
 
-export default function ExperimentCard({ experiment, selected, onSelect }) {
+interface ExperimentCardProps {
+  experiment: DataSourceResponse;
+  selected: boolean;
+  onSelect: (value: number) => void;
+}
+
+export default function ExperimentCard({
+  experiment,
+  selected,
+  onSelect,
+}: ExperimentCardProps): JSX.Element {
   const { source_number, source_name, file_name, comment } = experiment;
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [isModalDelete, setIsModalDelete] = useState(false);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  const theme = useSelector(selectTheme);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const theme = useAppSelector(selectTheme);
   const navigate = useNavigate();
 
-  const handleEdit = (e) => {
+  const handleEdit = (e: React.MouseEvent<HTMLSpanElement>): void => {
     e.stopPropagation();
     setIsModalEdit(true);
     setIsModalDelete(false);
   };
 
-  const handleDelete = (e) => {
+  const handleDelete = (e: React.MouseEvent<HTMLSpanElement>): void => {
     e.stopPropagation();
     setIsModalEdit(false);
     setIsModalDelete(true);
   };
 
-  const handleCardClick = () => {
-    console.log("Card clicked", source_number);
+  const handleCardClick = (): void => {
     onSelect(source_number);
     if (isLoggedIn) {
       navigate(`/data/${source_number}`);

@@ -1,16 +1,15 @@
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../redux/hooks";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
-
 import css from "./AppNav.module.css";
 import clsx from "clsx";
 
-const classItem = ({ isActive }) => {
+const classItem = ({ isActive }: { isActive: boolean }): string => {
   return clsx(css.item, isActive && css.active);
 };
 
-export default function AppNav() {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+export default function AppNav(): JSX.Element {
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   return (
     <nav className={css.nav}>
       <NavLink className={classItem} to="/">

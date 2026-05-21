@@ -1,16 +1,23 @@
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../redux/hooks";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { DataSourceResponse } from "../../redux/datasources/types";
 import ExperimentCard from "../ExperimentCard/ExperimentCard";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import css from "./ExperimentCardsList.module.css";
 
-export default function ExperimentCardsList({ experiments }) {
+interface ExperimentCardsListProps {
+  experiments: DataSourceResponse[];
+}
+
+export default function ExperimentCardsList({
+  experiments,
+}: ExperimentCardsListProps): JSX.Element {
   const navigate = useNavigate();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const { id: currentSource } = useParams();
 
-  const handleSelect = (source_number) => {
+  const handleSelect = (source_number: number): void => {
     if (isLoggedIn) {
       navigate(`/data/${source_number}`);
     } else {

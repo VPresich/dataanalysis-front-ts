@@ -1,31 +1,48 @@
-import { useForm, FormProvider, Controller } from "react-hook-form";
+import { useForm, FormProvider, Controller, Resolver } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../UI/Input/Input";
 import { getChangedFields } from "../../auxiliary/getChangedFields";
 import { feedbackSchema } from "./feedbackSchema";
 import TextArea from "../UI/TextArea/TextArea";
+import { InferType } from "yup";
 import Button from "../UI/Button/Button";
+import {
+  DataSourceResponse,
+  DataSourceUpdate,
+} from "../../redux/datasources/types";
 import css from "./EditExperimentForm.module.css";
 
-const EditExperimentForm = ({ experiment, handleExperimentSave }) => {
-  const methods = useForm({
-    resolver: yupResolver(feedbackSchema),
+type EditExperimentFormData = InferType<typeof feedbackSchema>;
+
+interface EditExperimentFormProps {
+  experiment: DataSourceResponse;
+  handleExperimentSave: (values: DataSourceUpdate) => void;
+}
+
+const EditExperimentForm = ({
+  experiment,
+  handleExperimentSave,
+}: EditExperimentFormProps): JSX.Element => {
+  const methods = useForm<EditExperimentFormData>({
+    resolver: yupResolver(feedbackSchema) as Resolver<EditExperimentFormData>,
     defaultValues: {
-      source_number: experiment.source_number,
+      source_number: experiment.source_number || ("" as unknown as number),
       source_name: experiment.source_name || "",
       file_name: experiment.file_name || "",
       comment: experiment.comment || "",
     },
   });
 
-  const { control, handleSubmit } = methods;
+  const { handleSubmit } = methods;
 
-  const onSubmit = (values) => {
+  const onSubmit = (values: EditExperimentFormData): void => {
     const changedFields = getChangedFields(
       values,
-      methods.formState.defaultValues,
+      methods.formState.defaultValues as Record<string, unknown>,
     );
-    handleExperimentSave && handleExperimentSave(changedFields);
+    if (handleExperimentSave) {
+      handleExperimentSave(changedFields as DataSourceUpdate);
+    }
   };
 
   return (
@@ -43,24 +60,17 @@ const EditExperimentForm = ({ experiment, handleExperimentSave }) => {
           <div className={css.inputsWrapper}>
             <Controller
               name="source_number"
-              control={control}
               render={({ field }) => (
-                <Input
-                  {...field}
-                  value={field.value ? String(field.value) : ""}
-                  type="number"
-                  readOnly
-                />
+                <Input {...field} type="number" readOnly />
               )}
             />
 
             <Controller
               name="source_name"
-              control={control}
               render={({ field }) => (
                 <Input
                   {...field}
-                  value={field.value ? String(field.value) : ""}
+                  value={field.value ?? ""}
                   placeholder="Source name"
                   type="text"
                 />
@@ -69,11 +79,10 @@ const EditExperimentForm = ({ experiment, handleExperimentSave }) => {
 
             <Controller
               name="file_name"
-              control={control}
               render={({ field }) => (
                 <Input
                   {...field}
-                  value={field.value ? String(field.value) : ""}
+                  value={field.value ?? ""}
                   placeholder="File name"
                   type="text"
                 />
@@ -82,11 +91,10 @@ const EditExperimentForm = ({ experiment, handleExperimentSave }) => {
 
             <Controller
               name="comment"
-              control={control}
               render={({ field }) => (
                 <TextArea
                   {...field}
-                  value={field.value ? String(field.value) : ""}
+                  value={field.value ?? ""}
                   placeholder="Comment"
                   className={css.auxTextArea}
                 />
