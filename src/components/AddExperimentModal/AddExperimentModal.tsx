@@ -1,6 +1,9 @@
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../redux/hooks";
 import AddExperimentForm from "../AddExperimentForm/AddExperimentForm";
 import ModalWrapper from "../UI/ModalWrapper/ModalWrapper";
+import { getErrorMessage } from "../../auxiliary/getErrorMessage";
+import { AddExperimentFormData } from "../AddExperimentForm/AddExperimentForm";
+import { DataSourceCreate } from "../../redux/datasources/types";
 import { uploadData } from "../../redux/datasources/operations";
 import {
   errNotify,
@@ -9,22 +12,25 @@ import {
 
 const isDevMode = import.meta.env.VITE_DEVELOPED_MODE === "true";
 
-export default function AddExperimentModal({ onClose }) {
-  const dispatch = useDispatch();
+interface AddExperimentModal {
+  onClose: () => void;
+}
 
-  const handleAddExperimentSubmit = (values) => {
-    // console.log(values);
-    dispatch(uploadData(values))
+export default function AddExperimentModal({ onClose }: AddExperimentModal) {
+  const dispatch = useAppDispatch();
+
+  const handleAddExperimentSubmit = (values: AddExperimentFormData) => {
+    dispatch(uploadData(values as DataSourceCreate))
       .unwrap()
       .then(() => {
         if (isDevMode) {
           successNotify("Data uploaded successfully");
         }
-        onClose && onClose();
+        onClose?.();
       })
-      .catch((error) => {
+      .catch((error: undefined) => {
         if (isDevMode) {
-          errNotify("Failed to upload data");
+          errNotify(getErrorMessage(error) || "Failed to upload data");
         }
         console.error("Upload error", error);
       });

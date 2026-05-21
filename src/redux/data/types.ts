@@ -49,3 +49,5 @@ export interface AnalysisState {
   error: string | null;
   // uploadProgress: number;
 }
+
+export type ProcessedTracksData = Record<string, DataRecord[]>;

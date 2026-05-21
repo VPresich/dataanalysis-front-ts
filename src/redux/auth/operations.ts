@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "../../api/api";
 import { RootState } from "../store";
+import { getErrorMessage } from "../../auxiliary/getErrorMessage";
 import { setAuthHeader, clearAuthHeader } from "../../api/axiosInst";
 import {
   User,
@@ -25,10 +26,8 @@ export const register = createAsyncThunk<
       setAuthHeader(data.token);
     }
     return data;
-  } catch (error: any) {
-    const message =
-      error.response?.data?.message || error.message || "Unknown error";
-    return thunkAPI.rejectWithValue(message);
+  } catch (error: unknown) {
+    return thunkAPI.rejectWithValue(getErrorMessage(error));
   }
 });
 
@@ -43,10 +42,8 @@ export const logIn = createAsyncThunk<
       setAuthHeader(data.token);
     }
     return data;
-  } catch (error: any) {
-    const message =
-      error.response?.data?.message || error.message || "Unknown error";
-    return thunkAPI.rejectWithValue(message);
+  } catch (error: unknown) {
+    return thunkAPI.rejectWithValue(getErrorMessage(error));
   }
 });
 
@@ -56,12 +53,10 @@ export const logOut = createAsyncThunk<void, void, { rejectValue: string }>(
     try {
       await api.post<void>("/auth/logout");
       clearAuthHeader();
-    } catch (error: any) {
-      const message =
-        error.response?.data?.message || error.message || "Unknown error";
-      return thunkAPI.rejectWithValue(message);
+    } catch (error: unknown) {
+      return thunkAPI.rejectWithValue(getErrorMessage(error));
     }
-  }
+  },
 );
 
 export const refreshUser = createAsyncThunk<
@@ -83,10 +78,8 @@ export const refreshUser = createAsyncThunk<
     try {
       const user = await api.get<User>("/users/current");
       return user;
-    } catch (error: any) {
-      const message =
-        error.response?.data?.message || error.message || "Unknown error";
-      return thunkAPI.rejectWithValue(message);
+    } catch (error: unknown) {
+      return thunkAPI.rejectWithValue(getErrorMessage(error));
     }
   },
   {
@@ -94,7 +87,7 @@ export const refreshUser = createAsyncThunk<
       const token = getState().auth.token;
       return token !== null;
     },
-  }
+  },
 );
 
 export const updateTheme = createAsyncThunk<
@@ -105,10 +98,8 @@ export const updateTheme = createAsyncThunk<
   try {
     const data = await api.patch<UserUpdateTheme>("/users/themes", themeData);
     return data;
-  } catch (error: any) {
-    const message =
-      error.response?.data?.message || error.message || "Unknown error";
-    return thunkAPI.rejectWithValue(message);
+  } catch (error: unknown) {
+    return thunkAPI.rejectWithValue(getErrorMessage(error));
   }
 });
 
@@ -135,10 +126,8 @@ export const updateUserProfile = createAsyncThunk<
       });
     }
     return response;
-  } catch (error: any) {
-    const message =
-      error.response?.data?.message || error.message || "Unknown error";
-    return thunkAPI.rejectWithValue(message);
+  } catch (error: unknown) {
+    return thunkAPI.rejectWithValue(getErrorMessage(error));
   }
 });
 
@@ -150,10 +139,8 @@ export const resendVerify = createAsyncThunk<
   try {
     const data = await api.post<ServerMessage>("/auth/resend-verify", payload);
     return data;
-  } catch (error: any) {
-    const message =
-      error.response?.data?.message || error.message || "Unknown error";
-    return thunkAPI.rejectWithValue(message);
+  } catch (error: unknown) {
+    return thunkAPI.rejectWithValue(getErrorMessage(error));
   }
 });
 
@@ -165,13 +152,11 @@ export const requestResetPwd = createAsyncThunk<
   try {
     const data = await api.post<ServerMessage>(
       "/auth/request-reset-pwd",
-      payload
+      payload,
     );
     return data;
-  } catch (error: any) {
-    const message =
-      error.response?.data?.message || error.message || "Unknown error";
-    return thunkAPI.rejectWithValue(message);
+  } catch (error: unknown) {
+    return thunkAPI.rejectWithValue(getErrorMessage(error));
   }
 });
 
@@ -183,9 +168,7 @@ export const resetPassword = createAsyncThunk<
   try {
     const data = await api.post<ServerMessage>("/auth/reset-pwd", payload);
     return data;
-  } catch (error: any) {
-    const message =
-      error.response?.data?.message || error.message || "Unknown error";
-    return thunkAPI.rejectWithValue(message);
+  } catch (error: unknown) {
+    return thunkAPI.rejectWithValue(getErrorMessage(error));
   }
 });

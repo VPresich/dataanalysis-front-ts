@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { getErrorMessage } from "../../auxiliary/getErrorMessage";
 import { api } from "../../api/api";
 // import { setUploadProgress } from "./slice";
 import {
@@ -17,11 +18,8 @@ export const getUserSources = createAsyncThunk<
     const data = await api.get<DataSourceResponse[]>("/sources/");
 
     return data;
-  } catch (error: any) {
-    const message =
-      error.response?.data?.message || error.message || "Unknown error";
-
-    return thunkAPI.rejectWithValue(message);
+  } catch (error: unknown) {
+    return thunkAPI.rejectWithValue(getErrorMessage(error));
   }
 });
 
@@ -34,11 +32,8 @@ export const getNonameSources = createAsyncThunk<
     const data = await api.get<DataSourceResponse[]>("/sources/noname/sources");
 
     return data;
-  } catch (error: any) {
-    const message =
-      error.response?.data?.message || error.message || "Unknown error";
-
-    return thunkAPI.rejectWithValue(message);
+  } catch (error: unknown) {
+    return thunkAPI.rejectWithValue(getErrorMessage(error));
   }
 });
 
@@ -56,15 +51,12 @@ export const uploadData = createAsyncThunk<
     });
     const data = await api.post<DataSourceOperationResponse>(
       "/sources/",
-      formData
+      formData,
     );
 
     return data;
-  } catch (error: any) {
-    const message =
-      error.response?.data?.message || error.message || "Unknown error";
-
-    return thunkAPI.rejectWithValue(message);
+  } catch (error: unknown) {
+    return thunkAPI.rejectWithValue(getErrorMessage(error));
   }
 });
 
@@ -75,15 +67,12 @@ export const deleteSourceByNumber = createAsyncThunk<
 >("sources/deleteSourceByNumber", async (sourceNumber, thunkAPI) => {
   try {
     const data = await api.delete<DataSourceOperationResponse>(
-      `/sources/${sourceNumber}`
+      `/sources/${sourceNumber}`,
     );
 
     return data;
-  } catch (error: any) {
-    const message =
-      error.response?.data?.message || error.message || "Unknown error";
-
-    return thunkAPI.rejectWithValue(message);
+  } catch (error: unknown) {
+    return thunkAPI.rejectWithValue(getErrorMessage(error));
   }
 });
 
@@ -97,17 +86,14 @@ export const updateSourceByNumber = createAsyncThunk<
     try {
       const data = await api.patch<DataSourceOperationResponse>(
         `/sources/${sourceNumber}`,
-        values
+        values,
       );
 
       return data;
-    } catch (error: any) {
-      const message =
-        error.response?.data?.message || error.message || "Unknown error";
-
-      return thunkAPI.rejectWithValue(message);
+    } catch (error: unknown) {
+      return thunkAPI.rejectWithValue(getErrorMessage(error));
     }
-  }
+  },
 );
 
 export const deleteAllSources = createAsyncThunk<
@@ -119,11 +105,8 @@ export const deleteAllSources = createAsyncThunk<
     const data = await api.delete<DataSourceOperationResponse>(`/sources/`);
 
     return data;
-  } catch (error: any) {
-    const message =
-      error.response?.data?.message || error.message || "Unknown error";
-
-    return thunkAPI.rejectWithValue(message);
+  } catch (error: unknown) {
+    return thunkAPI.rejectWithValue(getErrorMessage(error));
   }
 });
 

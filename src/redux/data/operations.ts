@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "../../api/api";
+import { getErrorMessage } from "../../auxiliary/getErrorMessage";
 import { DataRecord, FilterParams, RequestFilterParams } from "./types";
 
 export const getNonameData = createAsyncThunk<
@@ -10,10 +11,8 @@ export const getNonameData = createAsyncThunk<
   try {
     const data = await api.get<DataRecord[]>(`/data/noname/data`);
     return data;
-  } catch (error: any) {
-    const message =
-      error.response?.data?.message || error.message || "Unknown error";
-    return thunkAPI.rejectWithValue(message);
+  } catch (error: unknown) {
+    return thunkAPI.rejectWithValue(getErrorMessage(error));
   }
 });
 
@@ -24,13 +23,11 @@ export const getNonameDataBySource = createAsyncThunk<
 >("data/getNonameDataBySource", async (sourceNumber, thunkAPI) => {
   try {
     const data = await api.get<DataRecord[]>(
-      `/data/noname/data/${Number(sourceNumber)}`
+      `/data/noname/data/${Number(sourceNumber)}`,
     );
     return data;
-  } catch (error: any) {
-    const message =
-      error.response?.data?.message || error.message || "Unknown error";
-    return thunkAPI.rejectWithValue(message);
+  } catch (error: unknown) {
+    return thunkAPI.rejectWithValue(getErrorMessage(error));
   }
 });
 
@@ -42,10 +39,8 @@ export const getDataBySource = createAsyncThunk<
   try {
     const data = await api.get<DataRecord[]>(`/data/${Number(sourceNumber)}`);
     return data;
-  } catch (error: any) {
-    const message =
-      error.response?.data?.message || error.message || "Unknown error";
-    return thunkAPI.rejectWithValue(message);
+  } catch (error: unknown) {
+    return thunkAPI.rejectWithValue(getErrorMessage(error));
   }
 });
 
@@ -64,8 +59,8 @@ export const getFilteredData = createAsyncThunk<
         params,
       });
       return data;
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message);
+    } catch (error: unknown) {
+      return thunkAPI.rejectWithValue(getErrorMessage(error));
     }
-  }
+  },
 );

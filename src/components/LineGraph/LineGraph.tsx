@@ -1,21 +1,50 @@
 import { useRef } from "react";
 import { Line } from "react-chartjs-2";
-import { Chart, registerables } from "chart.js";
+import {
+  Chart,
+  registerables,
+  ChartOptions,
+  ChartData,
+  TooltipItem,
+} from "chart.js";
 import { getPointColor } from "../../auxiliary/getPointColor";
-import { buildTooltipLines } from "../../auxiliary/buildTooltipLines";
+import { buildTooltipLines } from "../..//auxiliary/buildTooltipLines";
 import zoomPlugin from "chartjs-plugin-zoom";
 import Button from "../UI/Button/Button";
+import { ProcessedTracksData } from "../../redux/data/types";
 import css from "./LineGraph.module.css";
+
 Chart.register(...registerables, zoomPlugin);
 
-const getCSSVariableValue = (variableName) => {
+interface ZoomPluginOptions {
+  plugins: {
+    zoom: {
+      pan: {
+        enabled: boolean;
+        mode: "x" | "y" | "xy";
+      };
+      zoom: {
+        enabled: boolean;
+        mode: "x" | "y" | "xy";
+        wheel: { enabled: boolean };
+        pinch: { enabled: boolean };
+      };
+    };
+  };
+}
+
+const getCSSVariableValue = (variableName: string): string => {
   return getComputedStyle(document.documentElement).getPropertyValue(
     variableName,
   );
 };
 
-const LineGraph = ({ groupedData }) => {
-  const chartRef = useRef(null);
+type LineGraphProps = {
+  groupedData: ProcessedTracksData;
+};
+
+const LineGraph = ({ groupedData }: LineGraphProps) => {
+  const chartRef = useRef<Chart<"line">>(null);
 
   if (!groupedData || Object.keys(groupedData).length === 0) {
     return <p>No data available to display.</p>;
@@ -28,8 +57,8 @@ const LineGraph = ({ groupedData }) => {
       return {
         label: `${trackNum}`,
         data: trackData.map((row) => ({
-          x: parseFloat(row.X),
-          y: parseFloat(row.Y),
+          x: row.X,
+          y: row.Y,
         })),
         fill: false,
         borderColor: lineColor || "rgba(75, 192, 192, 1)",
@@ -42,23 +71,27 @@ const LineGraph = ({ groupedData }) => {
     })
     .filter((dataset) => dataset !== null);
 
-  const chartData = {
+  const chartData: ChartData<"line"> = {
     datasets,
   };
 
-  const options = {
+  const options: ChartOptions<"line"> & ZoomPluginOptions = {
     responsive: true,
     plugins: {
       tooltip: {
         callbacks: {
-          title: (tooltipItems) => {
+          title: (tooltipItems: TooltipItem<"line">[]) => {
             const item = tooltipItems[0];
             const trackNum = item.dataset.label;
+            if (!trackNum || !groupedData[trackNum]) return "";
+
             const row = groupedData[trackNum][item.dataIndex];
             return `Track ${trackNum}, X: ${row.X}`;
           },
-          label: (tooltipItem) => {
+          label: (tooltipItem: TooltipItem<"line">) => {
             const trackNum = tooltipItem.dataset.label;
+            if (!trackNum || !groupedData[trackNum]) return "";
+
             const row = groupedData[trackNum][tooltipItem.dataIndex];
             return buildTooltipLines(row);
           },
@@ -87,8 +120,8 @@ const LineGraph = ({ groupedData }) => {
         beginAtZero: false,
         grid: {
           drawOnChartArea: true,
-          zeroLineColor: "rgba(0, 0, 0, 0.5)",
-          zeroLineWidth: 2,
+          color: ["rgba(0, 0, 0, 0.1)"],
+          lineWidth: [1],
         },
       },
       y: {
@@ -99,8 +132,8 @@ const LineGraph = ({ groupedData }) => {
         beginAtZero: false,
         grid: {
           drawOnChartArea: true,
-          zeroLineColor: "rgba(0, 0, 0, 0.5)",
-          zeroLineWidth: 2,
+          color: ["rgba(0, 0, 0, 0.1)"],
+          lineWidth: [1],
         },
       },
     },
