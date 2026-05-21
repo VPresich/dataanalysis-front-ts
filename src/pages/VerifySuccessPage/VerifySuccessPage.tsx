@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
 import DocumentTitle from "../../components/DocumentTitle";
 import imgUrl from "../../assets/img/home/default_block.webp";
-import css from "./VerifyErrorPage.module.css";
+import css from "./VerifySuccessPage.module.css";
 
-export default function VerifyErrorPage() {
+export default function VerifySuccessPage(): JSX.Element {
   return (
     <>
       <DocumentTitle>Verify Error Page</DocumentTitle>
       <div className={css.container}>
         <div className={css.infoContainer}>
-          <h1 className={css.title}>Email verification failed</h1>
+          <h1 className={css.title}>Email verified successfully!</h1>
           <p className={css.text}>
-            The verification link is invalid or has already been used.
+            Thank you! You can now log in to your account.
           </p>
           <Link to="/" className={css.link}>
             Back to Home
