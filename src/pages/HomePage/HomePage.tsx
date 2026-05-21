@@ -1,7 +1,8 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import clsx from "clsx";
+import { Theme } from "../../redux/auth/types";
 import { selectTheme } from "../../redux/auth/selectors";
 import { closeSidebar } from "../../redux/sidebar/slice";
 import DocumentTitle from "../../components/DocumentTitle";
@@ -14,7 +15,7 @@ import imgRedUrl from "../../assets/img/home/red_analysis_block.webp";
 import { refreshUser } from "../../redux/auth/operations";
 import { saveToken } from "../../redux/auth/slice";
 
-const selectImgUrl = (theme) => {
+const selectImgUrl = (theme: Theme) => {
   let imgUrl = imgDefaultUrl;
 
   switch (theme) {
@@ -41,7 +42,7 @@ import { useNavigate } from "react-router-dom";
 import css from "./HomePage.module.css";
 
 export default function HomePage() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -57,7 +58,7 @@ export default function HomePage() {
     }
   }, [dispatch, location, navigate]);
 
-  const theme = useSelector(selectTheme);
+  const theme = useAppSelector(selectTheme);
 
   const handleClick = () => {
     navigate("/data");

@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import Loader from "../../components/UI/Loader/Loader";
 import { getUserSources } from "../../redux/datasources/operations";
 import { selectIsLoading } from "../../redux/datasources/selectors";
@@ -11,8 +11,8 @@ import { errNotify, successNotify } from "../../auxiliary/notification";
 const isDevMode = import.meta.env.VITE_DEVELOPED_MODE === "true";
 
 export default function DataAnalysisHome() {
-  const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
+  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(selectIsLoading);
   useEffect(() => {
     const initApp = async () => {
       try {

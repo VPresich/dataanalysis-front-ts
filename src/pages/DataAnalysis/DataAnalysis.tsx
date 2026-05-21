@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import clsx from "clsx";
@@ -7,6 +7,7 @@ import DataTable from "../../components/DataTable/DataTable";
 import DataFilters from "../../components/DataFilters/DataFilters";
 import ShowGraphModal from "../../components/ShowGraphModal/ShowGraphModal";
 import processData from "../../auxiliary/processData";
+import { getErrorMessage } from "../../auxiliary/getErrorMessage";
 import { updateTrackNumbers } from "../../redux/datafilters/slice";
 import {
   selectDataForAnalysisLength,
@@ -25,19 +26,19 @@ import css from "./DataAnalysis.module.css";
 
 const isDevMode = import.meta.env.VITE_DEVELOPED_MODE === "true";
 
-export default function DataAnalysis() {
-  const dataLength = useSelector(selectDataForAnalysisLength);
-  const error = useSelector(selectError);
-  const dataForTrack = useSelector(selectFilteredData);
-  const theme = useSelector(selectTheme);
-  const startTime = useSelector(selectStartTime);
-  const endTime = useSelector(selectEndTime);
+export default function DataAnalysis(): JSX.Element {
+  const dataLength = useAppSelector(selectDataForAnalysisLength);
+  const error = useAppSelector(selectError);
+  const dataForTrack = useAppSelector(selectFilteredData);
+  const theme = useAppSelector(selectTheme);
+  const startTime = useAppSelector(selectStartTime);
+  const endTime = useAppSelector(selectEndTime);
 
-  const dispatch = useDispatch();
-  const { id: sourceNumber } = useParams();
+  const dispatch = useAppDispatch();
+  const { id: routeId } = useParams<{ id: string }>();
 
   useEffect(() => {
-    const initApp = async () => {
+    const loadSources = async () => {
       try {
         const sources = await dispatch(getUserSources()).unwrap();
         if (isDevMode) successNotify("Success loading USER sources");
@@ -48,6 +49,17 @@ export default function DataAnalysis() {
       } catch {
         if (isDevMode) errNotify("Error loading USER sources");
       }
+    };
+
+    loadSources();
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!routeId) return;
+    const sourceNumber = Number(routeId);
+    if (Number.isNaN(sourceNumber)) return;
+
+    const loadData = async () => {
       try {
         const data = await dispatch(
           getFilteredData({
@@ -65,14 +77,14 @@ export default function DataAnalysis() {
         dispatch(updateTrackNumbers(filteredTracks));
         if (isDevMode)
           successNotify("Tracks successfully get trajectory of noname");
-      } catch (error) {
-        console.error(error);
-        if (isDevMode) errNotify("Error loading User data");
+      } catch (error: unknown) {
+        if (isDevMode)
+          errNotify(getErrorMessage(error) || "Error loading User data");
       }
     };
 
-    initApp();
-  }, [dispatch, sourceNumber, startTime, endTime]);
+    loadData();
+  }, [dispatch, routeId, startTime, endTime]);
 
   return (
     <>

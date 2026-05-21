@@ -5,10 +5,10 @@ import { DataRecord } from "../../redux/data/types";
 import css from "./DataTable.module.css";
 
 interface DataTableProps {
-  data: DataRecord;
+  data: DataRecord[];
 }
 
-const DataTable = ({ data }: DataTableProps) => {
+const DataTable = ({ data }: DataTableProps): JSX.Element => {
   const theme = useAppSelector(selectTheme);
   if (!Array.isArray(data)) {
     console.error("Expected data to be an array, but got:", data);

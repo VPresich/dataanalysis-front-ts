@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import DocumentTitle from "../../components/DocumentTitle";
@@ -8,6 +8,7 @@ import DataFilters from "../../components/DataFilters/DataFilters";
 import ShowGraphModal from "../../components/ShowGraphModal/ShowGraphModal";
 import { getNonameDataBySource } from "../../redux/data/operations";
 import { getNonameSources } from "../../redux/datasources/operations";
+import { getErrorMessage } from "../../auxiliary/getErrorMessage";
 import {
   selectDataForAnalysisLength,
   selectFilteredData,
@@ -22,50 +23,58 @@ import css from "./ExampleAnalysis.module.css";
 const isDevMode = import.meta.env.VITE_DEVELOPED_MODE === "true";
 
 export default function ExampleAnalysis() {
-  const dataLength = useSelector(selectDataForAnalysisLength);
-  const dispatch = useDispatch();
+  const dataLength = useAppSelector(selectDataForAnalysisLength);
+  const dispatch = useAppDispatch();
 
-  const error = useSelector(selectError);
-  const dataForTrack = useSelector(selectFilteredData);
-  const theme = useSelector(selectTheme);
+  const error = useAppSelector(selectError);
+  const dataForTrack = useAppSelector(selectFilteredData);
+  const theme = useAppSelector(selectTheme);
 
-  const { id: sourceNumber } = useParams();
+  const { id: routeId } = useParams<{ id: string }>();
 
   useEffect(() => {
-    const initApp = async () => {
+    const loadSources = async () => {
       try {
         const sources = await dispatch(getNonameSources()).unwrap();
         if (!sources || (Array.isArray(sources) && sources.length === 0)) {
           if (isDevMode) errNotify("No Noname sources found");
           return;
         }
-
         if (isDevMode) successNotify("Success loading Noname sources");
       } catch {
         if (isDevMode) errNotify("Error loading Noname sources");
       }
+    };
 
+    loadSources();
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!routeId) return;
+
+    const loadData = async () => {
       try {
-        const data = await dispatch(
-          getNonameDataBySource(sourceNumber),
-        ).unwrap();
+        const data = await dispatch(getNonameDataBySource(routeId)).unwrap();
+
         if (!data || (Array.isArray(data) && data.length === 0)) {
           if (isDevMode) errNotify("No Noname data found");
           return;
         }
         if (isDevMode) successNotify("Success loading Noname data");
+
         const filteredTracks = processData(data, 5);
         dispatch(updateTrackNumbers(filteredTracks));
+
         if (isDevMode)
           successNotify("Tracks successfully get trajectory of noname");
-      } catch (error) {
-        console.error(error);
-        if (isDevMode) errNotify("Error loading Noname data");
+      } catch (error: unknown) {
+        if (isDevMode)
+          errNotify(getErrorMessage(error) || "Error loading Noname data");
       }
     };
 
-    initApp();
-  }, [dispatch, sourceNumber]);
+    loadData();
+  }, [dispatch, routeId]);
 
   return (
     <>

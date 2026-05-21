@@ -18,7 +18,7 @@ export const getNonameData = createAsyncThunk<
 
 export const getNonameDataBySource = createAsyncThunk<
   DataRecord[],
-  void,
+  number | string,
   { rejectValue: string }
 >("data/getNonameDataBySource", async (sourceNumber, thunkAPI) => {
   try {
@@ -33,7 +33,7 @@ export const getNonameDataBySource = createAsyncThunk<
 
 export const getDataBySource = createAsyncThunk<
   DataRecord[],
-  void,
+  number | string,
   { rejectValue: string }
 >("data/getDataBySource", async (sourceNumber, thunkAPI) => {
   try {

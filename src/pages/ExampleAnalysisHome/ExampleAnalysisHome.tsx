@@ -1,6 +1,6 @@
 import React from "react";
+import { useAppDispatch } from "../../redux/hooks";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { getNonameSources } from "../../redux/datasources/operations";
 import ExperimentNotSelected from "../../components/ExperimentNotSelected/ExperimentNotSelected";
 import DocumentTitle from "../../components/DocumentTitle";
@@ -9,7 +9,7 @@ import { errNotify, successNotify } from "../../auxiliary/notification";
 const isDevMode = import.meta.env.VITE_DEVELOPED_MODE === "true";
 
 export default function ExampleAnalysisHome() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   useEffect(() => {
     const initApp = async () => {
       try {
