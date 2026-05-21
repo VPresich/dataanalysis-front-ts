@@ -4,7 +4,7 @@ import css from "./VerifiedSuccessPage.module.css";
 /**
  * Page displayed after successful email verification.
  */
-export default function VerifiedSuccess() {
+export default function VerifiedSuccess(): JSX.Element {
   return (
     <div className={css.container}>
       <h1 className={css.title}>Email verified successfully!</h1>

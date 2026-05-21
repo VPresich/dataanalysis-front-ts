@@ -4,7 +4,7 @@ import css from "./VerifiedErrorPage.module.css";
 /**
  * Page displayed when email verification fails.
  */
-export default function VerifiedErrorPage() {
+export default function VerifiedErrorPage(): JSX.Element {
   return (
     <div className={css.container}>
       <h1 className={css.title}>Email verification failed</h1>

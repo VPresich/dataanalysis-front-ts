@@ -8,7 +8,7 @@ import { InferType } from "yup";
 import Input from "../../../UI/Input/Input";
 import css from "./PasswordResetForm.module.css";
 
-type PasswordResetFormData = InferType<typeof feedbackSchema>;
+export type PasswordResetFormData = InferType<typeof feedbackSchema>;
 
 interface PasswordResetFormProps {
   onSubmit: (values: PasswordResetFormData) => void;

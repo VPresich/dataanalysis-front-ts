@@ -1,22 +1,27 @@
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../redux/hooks";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { resetPassword } from "../../redux/auth/operations";
 import DocumentTitle from "../../components/DocumentTitle";
 import PasswordResetForm from "../../components/Authentication/Forms/PasswordResetForm/PasswordResetForm";
 import imgUrl from "../../assets/img/home/default_block.webp";
+import { getErrorMessage } from "../../auxiliary/getErrorMessage";
+import { PasswordResetFormData } from "../../components/Authentication/Forms/PasswordResetForm/PasswordResetForm";
 import { errNotify, successNotify } from "../../auxiliary/notification";
 import css from "./PwdResetPage.module.css";
 
-export default function PwdResetPage() {
-  const dispatch = useDispatch();
+export default function PwdResetPage(): JSX.Element {
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
-  const { token } = useParams();
 
-  const handleChangePassword = (formData) => {
-    console.log("RESET_PASSWORD_FORM:", formData);
+  const { token } = useParams<{ token: string }>();
 
+  const handleChangePassword = (formData: PasswordResetFormData): void => {
+    if (!token) {
+      errNotify("Reset token is missing or expired.");
+      return;
+    }
     dispatch(
       resetPassword({
         password: formData.password,
@@ -28,12 +33,12 @@ export default function PwdResetPage() {
         successNotify(resp.message);
         handleBackBtn();
       })
-      .catch((error) => {
-        errNotify(error);
+      .catch((error: unknown) => {
+        errNotify(getErrorMessage(error) || "Error in reset password");
       });
   };
 
-  const handleBackBtn = () => {
+  const handleBackBtn = (): void => {
     navigate("/");
   };
 
