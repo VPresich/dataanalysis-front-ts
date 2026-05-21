@@ -1,15 +1,26 @@
-import { useForm, FormProvider, Controller } from "react-hook-form";
+import { useForm, FormProvider, Controller, Resolver } from "react-hook-form";
 import { MdKeyboardReturn } from "react-icons/md";
 import Button from "../../../UI/Button/Button";
 import ReactIconButton from "../../../UI/ReactIconButton/ReactIconButton";
 import { feedbackSchema } from "./feedbackSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { InferType } from "yup";
 import Input from "../../../UI/Input/Input";
 import css from "./PasswordResetForm.module.css";
 
-export default function PasswordResetForm({ onSubmit, onBack }) {
-  const methods = useForm({
-    resolver: yupResolver(feedbackSchema),
+type PasswordResetFormData = InferType<typeof feedbackSchema>;
+
+interface PasswordResetFormProps {
+  onSubmit: (values: PasswordResetFormData) => void;
+  onBack: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+export default function PasswordResetForm({
+  onSubmit,
+  onBack,
+}: PasswordResetFormProps): JSX.Element {
+  const methods = useForm<PasswordResetFormData>({
+    resolver: yupResolver(feedbackSchema) as Resolver<PasswordResetFormData>,
     defaultValues: {
       password: "",
       confirm: "",
@@ -18,13 +29,9 @@ export default function PasswordResetForm({ onSubmit, onBack }) {
 
   const { handleSubmit } = methods;
 
-  const handleChange = async (values) => {
-    onSubmit(values);
-  };
-
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(handleChange)} className={css.form}>
+      <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
         <div className={css.content}>
           <div className={css.titleContainer}>
             <h3 className={css.title}>Change password</h3>
@@ -36,7 +43,6 @@ export default function PasswordResetForm({ onSubmit, onBack }) {
           <div className={css.inputsWrapper}>
             <Controller
               name="password"
-              control={methods.control}
               render={({ field }) => (
                 <Input {...field} placeholder="Password" type="password" />
               )}
@@ -44,7 +50,6 @@ export default function PasswordResetForm({ onSubmit, onBack }) {
 
             <Controller
               name="confirm"
-              control={methods.control}
               render={({ field }) => (
                 <Input
                   {...field}

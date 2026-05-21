@@ -4,10 +4,7 @@ import { closeSidebar } from "../../../redux/sidebar/slice";
 import { selectIsLoggedIn } from "../../../redux/auth/selectors";
 import LoginModal from "../LoginModal/LoginModal";
 import { logOut } from "../../../redux/auth/operations";
-import {
-  errNotify,
-  successNotify,
-} from "../../../auxiliary/notification/notification";
+import { errNotify, successNotify } from "../../../auxiliary/notification";
 
 import IconButton from "../../UI/IconButton/IconButton";
 

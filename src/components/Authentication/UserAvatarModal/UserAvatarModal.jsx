@@ -3,10 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateUserProfile } from "../../../redux/auth/operations";
 import { selectUserName, selectAvatarURL } from "../../../redux/auth/selectors";
 import UserImageElem from "../UserImageElem/UserImageElem";
-import {
-  errNotify,
-  successNotify,
-} from "../../../auxiliary/notification/notification";
+import { errNotify, successNotify } from "../../../auxiliary/notification";
 import ModalWrapper from "../../UI/ModalWrapper/ModalWrapper";
 import UserSettingsForm from "../Forms/UserSettingsForm/UserSettingsForm";
 import css from "./UserAvatarModal.module.css";

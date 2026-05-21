@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../redux/hooks";
 import { selectTheme } from "../../redux/auth/selectors";
 import { DataRecord } from "../../redux/data/types";
 import css from "./DataTable.module.css";
@@ -9,7 +9,7 @@ interface DataTableProps {
 }
 
 const DataTable = ({ data }: DataTableProps) => {
-  const theme = useSelector(selectTheme);
+  const theme = useAppSelector(selectTheme);
   if (!Array.isArray(data)) {
     console.error("Expected data to be an array, but got:", data);
     return <p>No data available</p>;

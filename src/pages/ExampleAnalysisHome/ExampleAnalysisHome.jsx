@@ -4,10 +4,7 @@ import { useDispatch } from "react-redux";
 import { getNonameSources } from "../../redux/datasources/operations";
 import ExperimentNotSelected from "../../components/ExperimentNotSelected/ExperimentNotSelected";
 import DocumentTitle from "../../components/DocumentTitle";
-import {
-  errNotify,
-  successNotify,
-} from "../../auxiliary/notification/notification";
+import { errNotify, successNotify } from "../../auxiliary/notification";
 
 const isDevMode = import.meta.env.VITE_DEVELOPED_MODE === "true";
 

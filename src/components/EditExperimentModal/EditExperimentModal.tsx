@@ -1,22 +1,26 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectSourceByNumber } from "../../redux/datasources/selectors";
 import { updateSourceByNumber } from "../../redux/datasources/operations";
 import EditExperimentForm from "../EditExperimentForm/EditExperimentForm";
+import { DataSourceUpdate } from "../../redux/datasources/types";
 import ModalWrapper from "../UI/ModalWrapper/ModalWrapper";
-import {
-  errNotify,
-  successNotify,
-} from "../../auxiliary/notification/notification";
+import { errNotify, successNotify } from "../../auxiliary/notification";
 
 const isDevMode = import.meta.env.VITE_DEVELOPED_MODE === "true";
 
-export default function EditExperimentModal({ onClose, sourceNumber }) {
-  const source = useSelector(selectSourceByNumber(sourceNumber));
-  const dispatch = useDispatch();
+interface EditExperimentModalProps {
+  onClose: () => void;
+  sourceNumber: number;
+}
 
-  const handleExperimentSave = (values) => {
-    console.log("Updating experiment:", values);
-    console.log("Experiment:", sourceNumber);
+export default function EditExperimentModal({
+  onClose,
+  sourceNumber,
+}: EditExperimentModalProps): JSX.Element {
+  const source = useAppSelector(selectSourceByNumber(sourceNumber));
+  const dispatch = useAppDispatch();
+
+  const handleExperimentSave = (values: DataSourceUpdate) => {
     dispatch(updateSourceByNumber({ sourceNumber, values }))
       .unwrap()
       .then(() => {

@@ -2,14 +2,19 @@ import { useForm, FormProvider } from "react-hook-form";
 import Button from "../UI/Button/Button";
 import css from "./DeleteApproveForm.module.css";
 
-interface DeleteApproveFormProps{
+interface DeleteApproveFormProps {
   onApprove: () => void;
   onCancel: () => void;
   title: string;
   text: string;
 }
 
-const DeleteApproveForm = ({ onApprove, onCancel, title, text }: DeleteApproveFormProps) => {
+const DeleteApproveForm = ({
+  onApprove,
+  onCancel,
+  title,
+  text,
+}: DeleteApproveFormProps): JSX.Element => {
   const methods = useForm();
 
   return (

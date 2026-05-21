@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import TimeForm from "../TimeForm/TimeForm";
 import DropDownSelector from "../UI/DropDownSelector/DropDownSelector";
@@ -31,22 +31,22 @@ import { selectSourceNumbers } from "../../redux/datasources/selectors";
 import { selectTheme } from "../../redux/auth/selectors";
 import css from "./DataFilters.module.css";
 
-const DataFilters = () => {
-  const dispatch = useDispatch();
+const DataFilters = (): JSX.Element => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const theme = useSelector(selectTheme);
-  const selectedTrackNums = useSelector(selectSelectedTrackNums);
-  const trackNumbersForMultySelect = useSelector(
+  const theme = useAppSelector(selectTheme);
+  const selectedTrackNums = useAppSelector(selectSelectedTrackNums);
+  const trackNumbersForMultySelect = useAppSelector(
     selectTrackNumbersForMultySelect,
   );
-  const immConsistentValues = useSelector(selectImmConsistentValues);
-  const immConsistent = useSelector(selectImmConsistent);
-  const immConsistentMaxValue = useSelector(selectImmConsistentMaxValue);
-  const startTime = useSelector(selectStartTime);
-  const endTime = useSelector(selectEndTime);
-  const is3D = useSelector(selectIs3D);
-  const sourceNumbers = useSelector(selectSourceNumbers);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const immConsistentValues = useAppSelector(selectImmConsistentValues);
+  const immConsistent = useAppSelector(selectImmConsistent);
+  const immConsistentMaxValue = useAppSelector(selectImmConsistentMaxValue);
+  const startTime = useAppSelector(selectStartTime);
+  const endTime = useAppSelector(selectEndTime);
+  const is3D = useAppSelector(selectIs3D);
+  const sourceNumbers = useAppSelector(selectSourceNumbers);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   const { id } = useParams<{ id: string }>();
   const sourceNumber = id || "";
@@ -65,27 +65,27 @@ const DataFilters = () => {
     }
   };
 
-  const handleImmConsistent = (value: string) => {
+  const handleImmConsistent = (value: string): void => {
     dispatch(saveImmConsistent(value));
   };
 
-  const handleSearch = (value: string) => {
+  const handleSearch = (value: string): void => {
     dispatch(saveImmConsistentMaxValue(value));
   };
 
-  const handleChangedTime = async (value: TimeDataPayload) => {
+  const handleChangedTime = (value: TimeDataPayload): void => {
     dispatch(saveTime(value));
   };
 
-  const handleReset = () => {
+  const handleReset = (): void => {
     dispatch(resetDataFilters());
   };
 
-  const handleSelectionChange = (options: string[]) => {
+  const handleSelectionChange = (options: string[]): void => {
     dispatch(saveSelectedTrackNums(options));
   };
 
-  const handleToggle = () => {
+  const handleToggle = (): void => {
     dispatch(setIs3D(!is3D));
   };
 

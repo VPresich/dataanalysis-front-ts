@@ -1,17 +1,20 @@
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../redux/hooks";
 import { deleteAllSources } from "../../redux/datasources/operations";
 
 import ModalWrapper from "../UI/ModalWrapper/ModalWrapper";
 import DeleteApproveForm from "../DeleteApproveForm/DeleteApproveForm";
-import {
-  errNotify,
-  successNotify,
-} from "../../auxiliary/notification/notification";
+import { errNotify, successNotify } from "../../auxiliary/notification";
 
 const isDevMode = import.meta.env.VITE_DEVELOPED_MODE === "true";
 
-export default function DeleteAllExperimentsModal({ onClose }) {
-  const dispatch = useDispatch();
+interface DeleteAllExperimentsModalProps {
+  onClose: () => void;
+}
+
+export default function DeleteAllExperimentsModal({
+  onClose,
+}: DeleteAllExperimentsModalProps): JSX.Element {
+  const dispatch = useAppDispatch();
 
   const handleDeleteAllExperiments = () => {
     dispatch(deleteAllSources())

@@ -1,23 +1,28 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { useParams, useNavigate } from "react-router-dom";
 import ModalWrapper from "../UI/ModalWrapper/ModalWrapper";
 import DeleteApproveForm from "../DeleteApproveForm/DeleteApproveForm";
 import { deleteSourceByNumber } from "../../redux/datasources/operations";
 import { selectNextSourceNumber } from "../../redux/datasources/selectors";
-import {
-  errNotify,
-  successNotify,
-} from "../../auxiliary/notification/notification";
+import { errNotify, successNotify } from "../../auxiliary/notification";
 
 const isDevMode = import.meta.env.VITE_DEVELOPED_MODE === "true";
 
-export default function DeleteExperimentModal({ onClose, sourceNumber }) {
-  const dispatch = useDispatch();
+interface DeleteExperimentModalProps {
+  onClose: () => void;
+  sourceNumber: number;
+}
+
+export default function DeleteExperimentModal({
+  onClose,
+  sourceNumber,
+}: DeleteExperimentModalProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { id: currentSource } = useParams();
-  const nextSourceNumber = useSelector(selectNextSourceNumber(sourceNumber));
+  const nextSourceNumber = useAppSelector(selectNextSourceNumber(sourceNumber));
 
-  const handleDeleteExperiment = () => {
+  const handleDeleteExperiment = (): void => {
     dispatch(deleteSourceByNumber(sourceNumber))
       .unwrap()
       .then(() => {

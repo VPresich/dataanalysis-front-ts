@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../redux/hooks";
 import { selectTheme } from "../../redux/auth/selectors";
 import iconsPath from "../../assets/img/icons.svg";
 import AppMobileMenuContent from "../AppMobileMenuContent/AppMobileMenuContent";
 import clsx from "clsx";
 import css from "./AppMobileMenuBtn.module.css";
 
-const AppMobileMenuBtn = () => {
-  const theme = useSelector(selectTheme);
+const AppMobileMenuBtn = (): JSX.Element => {
+  const theme = useAppSelector(selectTheme);
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleClick = () => {
+  const handleClick = (): void => {
     setIsOpen(!isOpen);
   };
 

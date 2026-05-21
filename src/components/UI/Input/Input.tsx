@@ -1,32 +1,27 @@
-import React, { useState, ForwardedRef } from "react";
+import React, { useState } from "react";
 import { useFormContext, FieldError } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import css from "./Input.module.css";
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  value?: string;
-  placeholder?: string;
-  type?: string;
 }
 
-const Input = (
+const InputRender = (
   { name, onChange, value, placeholder, type = "text", ...props }: InputProps,
-  ref: ForwardedRef<HTMLInputElement>,
-) => {
+  ref: React.Ref<HTMLInputElement>,
+): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false);
 
   const {
     formState: { errors },
   } = useFormContext<{ [key: string]: unknown }>();
 
-  const handleTogglePassword = () => {
+  const handleTogglePassword = (): void => {
     setShowPassword((prev) => !prev);
   };
 
   const inputType = type === "password" && showPassword ? "text" : type;
-
   const error = errors[name] as FieldError | undefined;
 
   return (
@@ -55,4 +50,6 @@ const Input = (
   );
 };
 
-export default React.forwardRef(Input);
+const Input = React.forwardRef<HTMLInputElement, InputProps>(InputRender);
+
+export default Input;

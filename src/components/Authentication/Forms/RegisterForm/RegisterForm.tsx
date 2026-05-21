@@ -1,4 +1,4 @@
-import { useForm, FormProvider, Controller } from "react-hook-form";
+import { useForm, FormProvider, Controller, Resolver } from "react-hook-form";
 import Button from "../../../UI/Button/Button";
 import Input from "../../../UI/Input/Input";
 import { feedbackSchema } from "./feedbackSchema";
@@ -8,13 +8,15 @@ import css from "./RegisterForm.module.css";
 
 type RegisterFormData = InferType<typeof feedbackSchema>;
 
-interface RegisterProps {
+interface RegisterFormProps {
   handleRegistration: (values: RegisterFormData) => void;
 }
 
-export default function RegisterForm({ handleRegistration }: RegisterProps) {
-  const methods = useForm({
-    resolver: yupResolver(feedbackSchema),
+export default function RegisterForm({
+  handleRegistration,
+}: RegisterFormProps): JSX.Element {
+  const methods = useForm<RegisterFormData>({
+    resolver: yupResolver(feedbackSchema) as Resolver<RegisterFormData>,
     defaultValues: {
       name: "",
       email: "",
@@ -24,7 +26,7 @@ export default function RegisterForm({ handleRegistration }: RegisterProps) {
 
   const { handleSubmit } = methods;
 
-  const onSubmit = async (values: RegisterFormData) => {
+  const onSubmit = (values: RegisterFormData): void => {
     handleRegistration(values);
   };
 
@@ -43,21 +45,18 @@ export default function RegisterForm({ handleRegistration }: RegisterProps) {
           <div className={css.inputsWrapper}>
             <Controller
               name="name"
-              control={methods.control}
               render={({ field }) => (
                 <Input {...field} placeholder="Name" type="text" />
               )}
             />
             <Controller
               name="email"
-              control={methods.control}
               render={({ field }) => (
                 <Input {...field} placeholder="Email" type="text" />
               )}
             />
             <Controller
               name="password"
-              control={methods.control}
               render={({ field }) => (
                 <Input {...field} placeholder="Password" type="password" />
               )}

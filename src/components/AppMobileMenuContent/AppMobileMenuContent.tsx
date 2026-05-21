@@ -1,19 +1,29 @@
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectIsLoggedIn, selectTheme } from "../../redux/auth/selectors";
-import { selectUserName } from "../../redux/auth/selectors";
-import AuthButton from "../../components/Authentication/AuthButton/AuthButton";
+import { useAppSelector } from "../../redux/hooks";
+import {
+  selectIsLoggedIn,
+  selectTheme,
+  selectUserName,
+} from "../../redux/auth/selectors";
+import AuthButton from "../Authentication/AuthButton/AuthButton";
 import GoogleButton from "../Authentication/GoogleBtn/GoogleBtn";
 import RegistrationButton from "../Authentication/RegistrationButton/RegistrationButton";
 import SidebarButton from "../SideBarButton/SideBarButton";
 import clsx from "clsx";
 import css from "./AppMobileMenuContent.module.css";
 
-const AppMobileMenuContent = ({ onMenuClick }) => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  const userName = useSelector(selectUserName);
-  const theme = useSelector(selectTheme);
-  const classItem = ({ isActive }) => {
+interface AppMobileMenuContentProps {
+  onMenuClick: () => void;
+}
+
+const AppMobileMenuContent = ({
+  onMenuClick,
+}: AppMobileMenuContentProps): JSX.Element => {
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const userName = useAppSelector(selectUserName);
+  const theme = useAppSelector(selectTheme);
+
+  const classItem = ({ isActive }: { isActive: boolean }): string => {
     return clsx(css.item, isActive && css.active);
   };
 

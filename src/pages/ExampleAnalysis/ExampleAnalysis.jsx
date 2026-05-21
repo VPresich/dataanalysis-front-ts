@@ -16,10 +16,7 @@ import {
 import { selectTheme } from "../../redux/auth/selectors";
 import processData from "../../auxiliary/processData";
 import { updateTrackNumbers } from "../../redux/datafilters/slice";
-import {
-  errNotify,
-  successNotify,
-} from "../../auxiliary/notification/notification";
+import { errNotify, successNotify } from "../../auxiliary/notification";
 import css from "./ExampleAnalysis.module.css";
 
 const isDevMode = import.meta.env.VITE_DEVELOPED_MODE === "true";

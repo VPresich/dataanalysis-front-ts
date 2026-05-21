@@ -1,4 +1,4 @@
-import { useForm, FormProvider, Controller } from "react-hook-form";
+import { useForm, FormProvider, Controller, Resolver } from "react-hook-form";
 import Button from "../../../UI/Button/Button";
 import Input from "../../../UI/Input/Input";
 import { feedbackSchema } from "./feedbackSchema";
@@ -22,9 +22,9 @@ export default function SendLinkForm({
   onBack,
   title,
   text,
-}: SendLinkFormProps) {
+}: SendLinkFormProps): JSX.Element {
   const methods = useForm<LoginFormData>({
-    resolver: yupResolver(feedbackSchema),
+    resolver: yupResolver(feedbackSchema) as Resolver<LoginFormData>,
     defaultValues: { email: "" },
   });
 
@@ -45,7 +45,6 @@ export default function SendLinkForm({
 
           <Controller
             name="email"
-            control={methods.control}
             render={({ field }) => (
               <Input {...field} placeholder="Email" type="text" />
             )}

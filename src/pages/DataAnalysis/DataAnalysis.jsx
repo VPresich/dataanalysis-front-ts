@@ -20,10 +20,7 @@ import {
 } from "../../redux/datafilters/selectors";
 import { getFilteredData } from "../../redux/data/operations";
 import { getUserSources } from "../../redux/datasources/operations";
-import {
-  errNotify,
-  successNotify,
-} from "../../auxiliary/notification/notification";
+import { errNotify, successNotify } from "../../auxiliary/notification";
 import css from "./DataAnalysis.module.css";
 
 const isDevMode = import.meta.env.VITE_DEVELOPED_MODE === "true";

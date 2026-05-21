@@ -5,10 +5,7 @@ import { resetPassword } from "../../redux/auth/operations";
 import DocumentTitle from "../../components/DocumentTitle";
 import PasswordResetForm from "../../components/Authentication/Forms/PasswordResetForm/PasswordResetForm";
 import imgUrl from "../../assets/img/home/default_block.webp";
-import {
-  errNotify,
-  successNotify,
-} from "../../auxiliary/notification/notification";
+import { errNotify, successNotify } from "../../auxiliary/notification";
 import css from "./PwdResetPage.module.css";
 
 export default function PwdResetPage() {
@@ -24,7 +21,7 @@ export default function PwdResetPage() {
       resetPassword({
         password: formData.password,
         token,
-      })
+      }),
     )
       .unwrap()
       .then((resp) => {

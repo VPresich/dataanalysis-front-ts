@@ -1,5 +1,5 @@
-import { useForm, FormProvider, Controller } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useForm, FormProvider, Controller, Resolver } from "react-hook-form";
+import { useAppSelector } from "../../redux/hooks";
 import clsx from "clsx";
 import { selectTheme } from "../../redux/auth/selectors";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -21,11 +21,13 @@ interface AddExperimentFormProps {
   onSubmitForm: (values: AddExperimentFormData) => void;
 }
 
-const AddExperimentForm = ({ onSubmitForm }: AddExperimentFormProps) => {
-  const existingNumbers = useSelector(selectSourceNumbers);
+const AddExperimentForm = ({
+  onSubmitForm,
+}: AddExperimentFormProps): JSX.Element => {
+  const existingNumbers = useAppSelector(selectSourceNumbers);
   const feedbackSchema = createFeedbackSchema(existingNumbers);
-  const methods = useForm({
-    resolver: yupResolver(feedbackSchema),
+  const methods = useForm<AddExperimentFormData>({
+    resolver: yupResolver(feedbackSchema) as Resolver<AddExperimentFormData>,
     defaultValues: {
       source_number: undefined,
       source_name: "",
@@ -34,7 +36,7 @@ const AddExperimentForm = ({ onSubmitForm }: AddExperimentFormProps) => {
       comment: "",
     },
   });
-  const theme = useSelector(selectTheme);
+  const theme = useAppSelector(selectTheme);
   const { setValue, handleSubmit, control } = methods;
 
   const handleFileSelected = (file: File) => {

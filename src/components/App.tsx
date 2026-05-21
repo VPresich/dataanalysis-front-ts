@@ -49,10 +49,7 @@ import { refreshUser } from "../redux/auth/operations";
 import AppRouter from "./AppRouter";
 import AppBar from "./AppBar/AppBar";
 import Loader from "./UI/Loader/Loader";
-import {
-  errNotify,
-  successNotify,
-} from "../auxiliary/notification/notification";
+import { errNotify, successNotify } from "../auxiliary/notification";
 import type { AppDispatch } from "../redux/store";
 
 const isDevMode = import.meta.env.VITE_DEVELOPED_MODE === "true";

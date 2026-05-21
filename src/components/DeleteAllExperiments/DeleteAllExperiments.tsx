@@ -7,15 +7,15 @@ import UnauthorizedModal from "../UnauthorizedModal/UnauthorizedModal";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import css from "./DeleteAllExperiments.module.css";
 
-export default function DeletAllExperiments() {
+export default function DeletAllExperiments(): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  const openModal = () => {
+  const openModal = (): void => {
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setIsModalOpen(false);
   };
 

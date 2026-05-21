@@ -5,30 +5,29 @@ import { getErrorMessage } from "../../auxiliary/getErrorMessage";
 import { AddExperimentFormData } from "../AddExperimentForm/AddExperimentForm";
 import { DataSourceCreate } from "../../redux/datasources/types";
 import { uploadData } from "../../redux/datasources/operations";
-import {
-  errNotify,
-  successNotify,
-} from "../../auxiliary/notification/notification";
+import { errNotify, successNotify } from "../../auxiliary/notification";
 
 const isDevMode = import.meta.env.VITE_DEVELOPED_MODE === "true";
 
-interface AddExperimentModal {
+interface AddExperimentModalProps {
   onClose: () => void;
 }
 
-export default function AddExperimentModal({ onClose }: AddExperimentModal) {
+export default function AddExperimentModal({
+  onClose,
+}: AddExperimentModalProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const handleAddExperimentSubmit = (values: AddExperimentFormData) => {
+  const handleAddExperimentSubmit = (values: AddExperimentFormData): void => {
     dispatch(uploadData(values as DataSourceCreate))
       .unwrap()
       .then(() => {
         if (isDevMode) {
           successNotify("Data uploaded successfully");
         }
-        onClose?.();
+        onClose();
       })
-      .catch((error: undefined) => {
+      .catch((error: unknown) => {
         if (isDevMode) {
           errNotify(getErrorMessage(error) || "Failed to upload data");
         }

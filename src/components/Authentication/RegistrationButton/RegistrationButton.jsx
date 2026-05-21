@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  errNotify,
-  successNotify,
-} from "../../../auxiliary/notification/notification";
+import { errNotify, successNotify } from "../../../auxiliary/notification";
 import { register } from "../../../redux/auth/operations";
 import ModalWrapper from "../../UI/ModalWrapper/ModalWrapper";
 import RegisterForm from "../Forms/RegisterForm/RegisterForm";

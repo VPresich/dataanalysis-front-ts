@@ -6,10 +6,7 @@ import { getUserSources } from "../../redux/datasources/operations";
 import { selectIsLoading } from "../../redux/datasources/selectors";
 import ExperimentNotSelected from "../../components/ExperimentNotSelected/ExperimentNotSelected";
 import DocumentTitle from "../../components/DocumentTitle";
-import {
-  errNotify,
-  successNotify,
-} from "../../auxiliary/notification/notification";
+import { errNotify, successNotify } from "../../auxiliary/notification";
 
 const isDevMode = import.meta.env.VITE_DEVELOPED_MODE === "true";
 

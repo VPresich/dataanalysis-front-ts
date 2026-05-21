@@ -46,7 +46,7 @@ export const uploadData = createAsyncThunk<
     const formData = new FormData();
     Object.entries(payload).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
-        formData.append(key, value as any);
+        formData.append(key, value as string | Blob);
       }
     });
     const data = await api.post<DataSourceOperationResponse>(

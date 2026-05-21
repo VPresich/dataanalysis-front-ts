@@ -4,10 +4,7 @@ import LoginForm from "../Forms/LoginForm/LoginForm";
 import SendLinkModal from "../SendLinkModal/SendLinkModal";
 import ModalWrapper from "../../UI/ModalWrapper/ModalWrapper";
 import { logIn } from "../../../redux/auth/operations";
-import {
-  errNotify,
-  successNotify,
-} from "../../../auxiliary/notification/notification";
+import { errNotify, successNotify } from "../../../auxiliary/notification";
 
 const isDevMode = import.meta.env.VITE_DEVELOPED_MODE === "true";
 
