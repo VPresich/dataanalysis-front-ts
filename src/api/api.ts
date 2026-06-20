@@ -6,14 +6,14 @@ type ApiWrapper = {
 
   post: <T = void>(
     url: string,
-    data?: any,
-    config?: AxiosRequestConfig
+    data?: unknown,
+    config?: AxiosRequestConfig,
   ) => Promise<T>;
 
   patch: <T = void>(
     url: string,
-    data?: any,
-    config?: AxiosRequestConfig
+    data?: unknown,
+    config?: AxiosRequestConfig,
   ) => Promise<T>;
 
   delete: <T = void>(url: string, config?: AxiosRequestConfig) => Promise<T>;

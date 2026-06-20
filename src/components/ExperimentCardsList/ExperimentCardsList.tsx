@@ -1,9 +1,10 @@
-import { useAppSelector } from "../../redux/hooks";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { DataSourceResponse } from "../../redux/datasources/types";
 import ExperimentCard from "../ExperimentCard/ExperimentCard";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
+import { changeSourceAndReset } from "../../redux/ai/slice";
 import css from "./ExperimentCardsList.module.css";
 
 interface ExperimentCardsListProps {
@@ -12,16 +13,18 @@ interface ExperimentCardsListProps {
 
 export default function ExperimentCardsList({
   experiments,
-}: ExperimentCardsListProps): JSX.Element {
+}: ExperimentCardsListProps) {
   const navigate = useNavigate();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const dispatch = useAppDispatch();
   const { id: currentSource } = useParams();
 
-  const handleSelect = (source_number: number): void => {
+  const handleSelect = (card: DataSourceResponse): void => {
+    dispatch(changeSourceAndReset(card._id));
     if (isLoggedIn) {
-      navigate(`/data/${source_number}`);
+      navigate(`/data/${card.source_number}`);
     } else {
-      navigate(`/example/${source_number}`);
+      navigate(`/example/${card.source_number}`);
     }
   };
 
@@ -32,7 +35,7 @@ export default function ExperimentCardsList({
           <ExperimentCard
             experiment={card}
             selected={String(currentSource) === String(card.source_number)}
-            onSelect={() => handleSelect(card.source_number)}
+            onSelect={() => handleSelect(card)}
           />
         </li>
       ))}

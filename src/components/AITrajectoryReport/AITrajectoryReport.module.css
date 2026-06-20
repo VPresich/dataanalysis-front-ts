@@ -1,0 +1,55 @@
+.reportContainer {
+  margin-top: 40px;
+  padding: 30px;
+  border-top: 2px solid var(--section-bgr);
+  background-color: var(--white);
+  font-family: var(--font-family);
+}
+
+.reportTitle {
+  color: var(--blue);
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+.loadingState {
+  color: var(--default);
+  font-style: italic;
+  padding: 20px 0;
+}
+
+.errorState {
+  color: var(--error);
+  background-color: var(--pink-accent);
+  padding: 15px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.markdownContent {
+  line-height: 1.7;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.markdownContent h3 {
+  color: var(--primary);
+  margin-top: 25px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--section-bgr);
+  padding-bottom: 5px;
+}
+
+.markdownContent ul {
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+
+.markdownContent li {
+  margin-bottom: 6px;
+}
+
+.markdownContent strong {
+  color: var(--primary);
+  font-weight: 600;
+}

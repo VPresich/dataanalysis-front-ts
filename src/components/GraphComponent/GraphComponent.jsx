@@ -1,5 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
-
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectIs3D } from "../../redux/datafilters/selectors";
 import LineGraph from "../LineGraph/LineGraph";
 import LineGraph3D from "../LineGraph3D/LineGraph3D";
@@ -12,20 +11,30 @@ import {
   selectSelectedTrackNums,
 } from "../../redux/datafilters/selectors";
 import { saveSelectedTrackNums } from "../../redux/datafilters/slice";
+import AITrajectoryReport from "../AITrajectoryReport/AITrajectoryReport";
+import { selectAITrackNum } from "../../redux/ai/selectors";
+import { changeActiveTrack } from "../../redux/ai/slice";
 import css from "./GraphComponent.module.css";
 
 const GraphComponent = () => {
-  const dispatch = useDispatch();
-  const theme = useSelector(selectTheme);
-  const is3D = useSelector(selectIs3D);
-  const selectedTrackNums = useSelector(selectSelectedTrackNums);
-  const processedTracks = useSelector(selectProcessedTracks);
-  const trackNumbersForMultySelect = useSelector(
+  const dispatch = useAppDispatch();
+  const theme = useAppSelector(selectTheme);
+  const is3D = useAppSelector(selectIs3D);
+  const selectedTrackNums = useAppSelector(selectSelectedTrackNums);
+  const processedTracks = useAppSelector(selectProcessedTracks);
+  const trackNumbersForMultySelect = useAppSelector(
     selectTrackNumbersForMultySelect,
   );
+  const activeAITrackNum = useAppSelector(selectAITrackNum);
 
   const handleSelectionChange = (options) => {
     dispatch(saveSelectedTrackNums(options));
+    if (
+      activeAITrackNum !== null &&
+      !options.map(Number).includes(activeAITrackNum)
+    ) {
+      dispatch(changeActiveTrack(null));
+    }
   };
   return (
     <div className={css.container}>
@@ -45,6 +54,7 @@ const GraphComponent = () => {
       ) : (
         <LineGraph groupedData={processedTracks} />
       )}
+      <AITrajectoryReport />
     </div>
   );
 };

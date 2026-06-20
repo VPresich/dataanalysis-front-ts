@@ -8,6 +8,7 @@ import houghReducer from "./houghdata/slice";
 import houghTrajectoryReducer from "./houghTrajectory/slice";
 import sideBarReducer from "./sidebar/slice";
 import loaderReducer from "./loader/slice";
+import aiReducer from "./ai/slice";
 import { AuthState } from "../redux/auth/types";
 
 import {
@@ -30,7 +31,7 @@ const authPersistConfig: PersistConfig<AuthState> = {
 
 const persistedAuthReducer = persistReducer<AuthState>(
   authPersistConfig,
-  authReducer
+  authReducer,
 );
 
 const store = configureStore({
@@ -43,6 +44,7 @@ const store = configureStore({
     houghtrack: houghTrajectoryReducer,
     sidebar: sideBarReducer,
     loader: loaderReducer,
+    ai: aiReducer,
   },
 
   middleware: (getDefaultMiddleware) =>
