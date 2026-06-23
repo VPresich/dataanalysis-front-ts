@@ -4,7 +4,6 @@ import ReactMarkdown from "react-markdown";
 import {
   selectAITrackNum,
   selectCurrentAIResponse,
-  selectAIIsLoading,
   selectAIError,
 } from "../../redux/ai/selectors";
 import css from "./AITrajectoryReport.module.css";
@@ -12,14 +11,13 @@ import css from "./AITrajectoryReport.module.css";
 export default function AITrajectoryReport() {
   const activeTrackNum = useAppSelector(selectAITrackNum);
   const currentResponse = useAppSelector(selectCurrentAIResponse);
-  const isLoading = useAppSelector(selectAIIsLoading);
   const error = useAppSelector(selectAIError);
 
-  const handleBlockClick = (e: React.MouseEvent) => {
+  const handleBlockClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
   };
 
-  if (!activeTrackNum && !isLoading && !error) return null;
+  if (!activeTrackNum && !error) return null;
 
   return (
     <div onClick={handleBlockClick} className={css.reportContainer}>
@@ -27,15 +25,8 @@ export default function AITrajectoryReport() {
         AI Analytical Report: Trajectory #{activeTrackNum}
       </h3>
 
-      {isLoading && (
-        <div className={css.loadingState}>
-          ⏳ AI is performing a comprehensive mathematical analysis of the IMM
-          filter and Chi-square criteria...
-        </div>
-      )}
-
       {error && (
-        <div className={css.errorState}>⚠️ Data Analysis Error: {error}</div>
+        <div className={css.errorState}>Data Analysis Error: {error}</div>
       )}
 
       {currentResponse && (
