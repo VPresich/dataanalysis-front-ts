@@ -1,10 +1,10 @@
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../redux/hooks";
 import { selectTheme } from "../../redux/auth/selectors";
 import clsx from "clsx";
 import css from "./ExperimentNotSelected.module.css";
 
-export default function ExperimentNotSelected() {
-  const theme = useSelector(selectTheme);
+export default function ExperimentNotSelected(): JSX.Element {
+  const theme = useAppSelector(selectTheme);
 
   return (
     <div className={clsx(css.container, css[theme])}>
