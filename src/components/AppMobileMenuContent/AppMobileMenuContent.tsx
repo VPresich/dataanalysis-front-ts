@@ -33,9 +33,15 @@ const AppMobileMenuContent = ({
         <NavLink className={classItem} to="/" onClick={onMenuClick}>
           Home
         </NavLink>
-        <NavLink className={classItem} to="/data" onClick={onMenuClick}>
-          IMMAnalysis
-        </NavLink>
+        {isLoggedIn ? (
+          <NavLink className={classItem} to="/data" onClick={onMenuClick}>
+            IMMAnalysis
+          </NavLink>
+        ) : (
+          <NavLink className={classItem} to="/example" onClick={onMenuClick}>
+            IMMExample
+          </NavLink>
+        )}
       </nav>
       <SidebarButton handleClick={onMenuClick} />
       <div className={css.authPart}>
